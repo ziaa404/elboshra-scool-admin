@@ -246,6 +246,51 @@ body{
 .step-sub{font-size:.76rem;color:var(--muted);line-height:1.5}
 
 @media(max-width:768px){:root{--sidebar-w:0px}.sidebar{display:none}.main{padding:16px}.layout{grid-template-columns:1fr}}
+
+/* ═══ STUDENTS PAGE ═══ */
+.stu-search-bar{display:flex;align-items:center;gap:10px;background:var(--card);backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,.80);border-radius:var(--r);padding:14px 20px;margin-bottom:18px;flex-wrap:wrap;box-shadow:var(--shadow-sm)}
+.stu-search-input{flex:1;min-width:200px;padding:9px 16px;border:1.5px solid var(--border);border-radius:var(--r-xs);background:rgba(255,255,255,.70);color:var(--ink);font-family:'Tajawal',sans-serif;font-size:.88rem;outline:none;}
+.stu-search-input:focus{border-color:var(--sky)}
+.stu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.stu-card{background:var(--card);backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,.80);border-radius:var(--r);padding:18px;box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s;animation:fadeUp .3s ease both}
+.stu-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.stu-card-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.stu-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#1565c0,#7c3aed);color:white;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stu-name{font-size:.95rem;font-weight:800;color:var(--ink2);margin-bottom:3px}
+.stu-class{font-size:.74rem;color:var(--muted);font-weight:600}
+.stu-phone{display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--muted);direction:ltr;margin-bottom:8px}
+.stu-beh{background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.15);border-radius:var(--r-xs);padding:8px 12px;font-size:.80rem;color:var(--ink);line-height:1.55}
+.stu-beh-label{font-size:.68rem;font-weight:800;color:#7c3aed;margin-bottom:3px}
+.stu-card-actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.stu-stars{display:flex;gap:2px}
+.stu-star{font-size:16px;cursor:pointer;transition:transform .1s;color:#d1d5db}
+.stu-star.on{color:var(--gold)}
+.stu-star:hover{transform:scale(1.25)}
+
+/* form inside modal */
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.fg label{font-size:.80rem;font-weight:800;color:var(--muted)}
+.fg input,.fg select,.fg textarea{padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r-xs);background:rgba(255,255,255,.70);color:var(--ink);font-family:'Tajawal',sans-serif;font-size:.88rem;outline:none;width:100%;transition:border-color .15s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--sky)}
+.fg textarea{resize:vertical;min-height:80px}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* excel upload zone */
+.xl-zone{border:2px dashed rgba(21,101,192,.30);border-radius:var(--r-sm);background:rgba(255,255,255,.40);padding:28px;text-align:center;cursor:pointer;transition:all .2s;position:relative;margin-bottom:16px}
+.xl-zone:hover,.xl-zone.drag-over{border-color:var(--sky);background:rgba(21,101,192,.05)}
+.xl-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+
+/* behavior tags */
+.beh-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.beh-tag{padding:4px 12px;border-radius:99px;font-size:.74rem;font-weight:700;cursor:pointer;border:1.5px solid transparent;transition:all .15s;font-family:'Tajawal',sans-serif}
+.beh-tag.pos{background:rgba(16,185,129,.10);border-color:rgba(16,185,129,.28);color:#059669}
+.beh-tag.pos.sel{background:rgba(16,185,129,.22);border-color:#059669}
+.beh-tag.neg{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.22);color:#dc2626}
+.beh-tag.neg.sel{background:rgba(239,68,68,.18);border-color:#dc2626}
+.beh-stars-row{display:flex;gap:6px;align-items:center;margin:10px 0}
+.beh-star-btn{font-size:26px;cursor:pointer;transition:transform .12s;color:#d1d5db;background:none;border:none;padding:0}
+.beh-star-btn.on{color:var(--gold)}
+.beh-star-btn:hover{transform:scale(1.3)}
 </style>
 </head>
 <body>
@@ -270,8 +315,16 @@ body{
     <div class="sidebar-label">القائمة</div>
     <div class="nav-item active" onclick="showView('import')"><span class="nav-icon">📥</span>استيراد التقارير</div>
     <div class="nav-item" onclick="showView('dashboard')"><span class="nav-icon">🏠</span>لوحة التحكم<span class="nav-badge green" id="sideAbsCount">0</span></div>
+    <div class="nav-item" onclick="showView('students')"><span class="nav-icon">👥</span>إدارة الطلاب<span class="nav-badge green" id="sideStudentCount">0</span></div>
     <div class="nav-item" onclick="showView('absences')"><span class="nav-icon">📋</span>سجل الغياب الكامل</div>
     <div class="nav-item" onclick="showView('analytics')"><span class="nav-icon">📊</span>التحليلات</div>
+    <div class="nav-item" onclick="showView('meetings')"><span class="nav-icon">🤝</span>لقاءات الأولياء</div>
+    <div class="nav-item" onclick="showView('notes')"><span class="nav-icon">📝</span>الملاحظات</div>
+    <div class="sidebar-label">نظام الإرشاد</div>
+    <div class="nav-item" onclick="showView('cases')"><span class="nav-icon">🗂️</span>متابعة الحالات</div>
+    <div class="nav-item" onclick="showView('annualplan')"><span class="nav-icon">📅</span>الخطة السنوية</div>
+    <div class="nav-item" onclick="showView('scales')"><span class="nav-icon">📏</span>مقاييس التقييم</div>
+    <div class="nav-item" onclick="showView('monthlyreport')"><span class="nav-icon">📝</span>التقرير الشهري</div>
     <div class="sidebar-label">الأدوات</div>
     <div class="nav-item" onclick="exportCSV()"><span class="nav-icon">⬇</span>تصدير CSV</div>
     <div class="nav-item" onclick="clearAllData()"><span class="nav-icon">🗑</span>مسح كل البيانات</div>
@@ -392,6 +445,56 @@ body{
       </div>
     </div>
 
+    <!-- ═══ STUDENTS ═══ -->
+    <div class="page-view" id="view-students">
+      <div class="page-header">
+        <div>
+          <div class="page-title">👥 إدارة الطلاب</div>
+          <div class="page-sub" id="stuPageSub">إضافة الطلاب يدوياً أو استيراد من Excel</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-ghost btn-sm" onclick="openXlModal()">📊 استيراد Excel</button>
+          <button class="btn btn-primary btn-sm" onclick="openAddStuModal()">➕ إضافة طالب</button>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));margin-bottom:18px;">
+        <div class="kpi blue"  style="padding:14px"><span class="kpi-icon">👥</span><div class="kpi-val" id="stuKpiTotal">0</div><div class="kpi-label">إجمالي الطلاب</div></div>
+        <div class="kpi plum"  style="padding:14px"><span class="kpi-icon">⭐</span><div class="kpi-val" id="stuKpiEval">0</div><div class="kpi-label">تم تقييمهم</div></div>
+        <div class="kpi green" style="padding:14px"><span class="kpi-icon">😊</span><div class="kpi-val" id="stuKpiGood">0</div><div class="kpi-label">سلوك ممتاز</div></div>
+        <div class="kpi red"   style="padding:14px"><span class="kpi-icon">⚠️</span><div class="kpi-val" id="stuKpiWatch">0</div><div class="kpi-label">يحتاج متابعة</div></div>
+      </div>
+
+      <!-- شريط البحث والفلتر -->
+      <div class="stu-search-bar">
+        <input class="stu-search-input" type="text" id="stuSearchInput" placeholder="🔍 ابحث عن طالب..." oninput="renderStudentsPage()">
+        <select class="filter-select" id="stuFilterClass" onchange="renderStudentsPage()" style="min-width:140px">
+          <option value="all">كل الفصول</option>
+        </select>
+        <select class="filter-select" id="stuFilterBeh" onchange="renderStudentsPage()" style="min-width:140px">
+          <option value="all">كل التقييمات</option>
+          <option value="high">⭐⭐⭐⭐+ ممتاز</option>
+          <option value="mid">⭐⭐⭐ متوسط</option>
+          <option value="low">⭐⭐ يحتاج متابعة</option>
+          <option value="none">لم يُقيَّم</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="exportStudentsCSV()">⬇ تصدير CSV</button>
+      </div>
+
+      <!-- شبكة الطلاب -->
+      <div class="stu-grid" id="stuGrid"></div>
+      <div id="stuEmpty" style="display:none;text-align:center;padding:60px 20px;">
+        <div style="font-size:3rem;margin-bottom:12px;">👥</div>
+        <div style="font-size:1.1rem;font-weight:800;color:var(--ink2);margin-bottom:6px">لا يوجد طلاب بعد</div>
+        <div style="font-size:.84rem;color:var(--muted);margin-bottom:18px">أضف طلاباً يدوياً أو استورد من Excel</div>
+        <div style="display:flex;gap:10px;justify-content:center;">
+          <button class="btn btn-ghost" onclick="openXlModal()">📊 استيراد Excel</button>
+          <button class="btn btn-primary" onclick="openAddStuModal()">➕ إضافة طالب</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ═══ ANALYTICS ═══ -->
     <div class="page-view" id="view-analytics">
       <div class="page-header">
@@ -405,13 +508,507 @@ body{
       <div class="card"><div class="card-header"><h3>🔴 أكثر الطلاب غياباً</h3></div><div class="card-body" id="topAbsent">—</div></div>
     </div>
 
+    <!-- ═══ MEETINGS ═══ -->
+    <div class="page-view" id="view-meetings">
+      <div class="page-header">
+        <div><div class="page-title">🤝 لقاءات الأولياء</div><div class="page-sub">تسجيل ومتابعة لقاءات أولياء الأمور</div></div>
+        <button class="btn btn-primary btn-sm" onclick="openMeetingModal()">➕ إضافة لقاء</button>
+      </div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));margin-bottom:18px;">
+        <div class="kpi blue"  style="padding:14px"><span class="kpi-icon">🤝</span><div class="kpi-val" id="meetKpiTotal">0</div><div class="kpi-label">إجمالي اللقاءات</div></div>
+        <div class="kpi green" style="padding:14px"><span class="kpi-icon">🏫</span><div class="kpi-val" id="meetKpiPresence">0</div><div class="kpi-label">حضوري</div></div>
+        <div class="kpi gold" style="padding:14px"><span class="kpi-icon">📞</span><div class="kpi-val" id="meetKpiPhone">0</div><div class="kpi-label">هاتفي / واتساب</div></div>
+        <div class="kpi plum" style="padding:14px"><span class="kpi-icon">🎥</span><div class="kpi-val" id="meetKpiVideo">0</div><div class="kpi-label">مرئي</div></div>
+      </div>
+      <div class="stu-search-bar">
+        <input class="stu-search-input" type="text" id="meetSearch" placeholder="🔍 ابحث باسم الطالب أو ولي الأمر..." oninput="renderMeetings()">
+        <select class="filter-select" id="meetFilterType" onchange="renderMeetings()">
+          <option value="all">كل أنواع اللقاء</option>
+          <option value="حضوري">حضوري</option>
+          <option value="هاتفي">هاتفي</option>
+          <option value="واتساب">واتساب</option>
+          <option value="مرئي">مرئي</option>
+        </select>
+      </div>
+      <div id="meetingsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-top:8px;"></div>
+      <div id="meetingsEmpty" style="display:none;text-align:center;padding:60px 20px;">
+        <div style="font-size:3rem;margin-bottom:12px;">🤝</div>
+        <div style="font-size:1.1rem;font-weight:800;color:var(--ink2);margin-bottom:6px">لا توجد لقاءات مسجّلة بعد</div>
+        <button class="btn btn-primary" onclick="openMeetingModal()">➕ إضافة لقاء جديد</button>
+      </div>
+    </div>
+
+    <!-- ═══ NOTES ═══ -->
+    <div class="page-view" id="view-notes">
+      <div class="page-header">
+        <div><div class="page-title">📝 الملاحظات</div><div class="page-sub">تسجيل ومتابعة الملاحظات على الطلاب</div></div>
+        <button class="btn btn-primary btn-sm" onclick="openNoteModal()">➕ إضافة ملاحظة</button>
+      </div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));margin-bottom:18px;">
+        <div class="kpi blue"  style="padding:14px"><span class="kpi-icon">📝</span><div class="kpi-val" id="noteKpiTotal">0</div><div class="kpi-label">إجمالي الملاحظات</div></div>
+        <div class="kpi red"   style="padding:14px"><span class="kpi-icon">🚨</span><div class="kpi-val" id="noteKpiUrgent">0</div><div class="kpi-label">عاجل</div></div>
+        <div class="kpi gold"  style="padding:14px"><span class="kpi-icon">⚠️</span><div class="kpi-val" id="noteKpiImportant">0</div><div class="kpi-label">مهم</div></div>
+        <div class="kpi green" style="padding:14px"><span class="kpi-icon">✅</span><div class="kpi-val" id="noteKpiNormal">0</div><div class="kpi-label">عادي</div></div>
+      </div>
+      <div class="stu-search-bar">
+        <input class="stu-search-input" type="text" id="noteSearch" placeholder="🔍 ابحث باسم الطالب أو محتوى الملاحظة..." oninput="renderNotes()">
+        <select class="filter-select" id="noteFilterType" onchange="renderNotes()">
+          <option value="all">كل الأنواع</option>
+          <option value="عام">عام</option>
+          <option value="أكاديمي">أكاديمي</option>
+          <option value="سلوكي">سلوكي</option>
+          <option value="تواصل مع ولي الأمر">تواصل مع ولي الأمر</option>
+        </select>
+        <select class="filter-select" id="noteFilterPriority" onchange="renderNotes()">
+          <option value="all">كل الأولويات</option>
+          <option value="عاجل">🚨 عاجل</option>
+          <option value="مهم">⚠️ مهم</option>
+          <option value="عادي">✅ عادي</option>
+        </select>
+      </div>
+      <div id="notesGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:8px;"></div>
+      <div id="notesEmpty" style="display:none;text-align:center;padding:60px 20px;">
+        <div style="font-size:3rem;margin-bottom:12px;">📝</div>
+        <div style="font-size:1.1rem;font-weight:800;color:var(--ink2);margin-bottom:6px">لا توجد ملاحظات مسجّلة بعد</div>
+        <button class="btn btn-primary" onclick="openNoteModal()">➕ إضافة ملاحظة</button>
+      </div>
+    </div>
+
+    <!-- ═══ CASES ═══ -->
+    <div class="page-view" id="view-cases">
+      <div class="page-header">
+        <div><div class="page-title">🗂️ متابعة الحالات الفردية</div><div class="page-sub">تسجيل وتتبع حالات الطلاب مع خطط التدخل والمتابعة</div></div>
+        <button class="btn btn-primary btn-sm" onclick="openCaseModal()">➕ حالة جديدة</button>
+      </div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));margin-bottom:18px;">
+        <div class="kpi blue"  style="padding:14px"><span class="kpi-icon">🗂️</span><div class="kpi-val" id="casesKpiTotal">0</div><div class="kpi-label">إجمالي الحالات</div></div>
+        <div class="kpi gold" style="padding:14px"><span class="kpi-icon">⏳</span><div class="kpi-val" id="casesKpiOpen">0</div><div class="kpi-label">تحت المتابعة</div></div>
+        <div class="kpi green" style="padding:14px"><span class="kpi-icon">✅</span><div class="kpi-val" id="casesKpiClosed">0</div><div class="kpi-label">مغلقة / محسّنة</div></div>
+        <div class="kpi red" style="padding:14px"><span class="kpi-icon">🔥</span><div class="kpi-val" id="casesKpiUrgent">0</div><div class="kpi-label">عاجلة</div></div>
+      </div>
+      <div class="stu-search-bar">
+        <input class="stu-search-input" type="text" id="casesSearch" placeholder="🔍 ابحث باسم الطالب أو نوع الحالة..." oninput="renderCasesPage()">
+        <select class="filter-select" id="casesFilterType" onchange="renderCasesPage()">
+          <option value="all">كل أنواع الحالات</option>
+          <option value="سلوكية">سلوكية</option>
+          <option value="أكاديمية">أكاديمية</option>
+          <option value="اجتماعية">اجتماعية</option>
+          <option value="نفسية">نفسية</option>
+          <option value="أسرية">أسرية</option>
+        </select>
+        <select class="filter-select" id="casesFilterStatus" onchange="renderCasesPage()">
+          <option value="all">كل الحالات</option>
+          <option value="مفتوحة">تحت المتابعة</option>
+          <option value="مغلقة">مغلقة</option>
+          <option value="عاجلة">عاجلة</option>
+        </select>
+      </div>
+      <div id="casesGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;"></div>
+      <div id="casesEmpty" style="display:none;text-align:center;padding:60px 20px;">
+        <div style="font-size:3rem;margin-bottom:12px;">🗂️</div>
+        <div style="font-size:1.1rem;font-weight:800;color:var(--ink2);margin-bottom:6px">لا توجد حالات مسجّلة بعد</div>
+        <div style="font-size:.84rem;color:var(--muted);margin-bottom:18px">ابدأ بتسجيل أولى الحالات الإرشادية</div>
+        <button class="btn btn-primary" onclick="openCaseModal()">➕ إضافة حالة جديدة</button>
+      </div>
+    </div>
+
+    <!-- ═══ ANNUAL PLAN ═══ -->
+    <div class="page-view" id="view-annualplan">
+      <div class="page-header">
+        <div><div class="page-title">📅 الخطة السنوية الإرشادية</div><div class="page-sub">برامج شهرية مرتبطة بمحاور التطوير الإرشادي</div></div>
+        <div style="display:flex;gap:8px;">
+          <select class="filter-select" id="planYearSelect" onchange="renderAnnualPlan()" style="min-width:120px">
+            <option value="1445">1445هـ</option>
+            <option value="1446" selected>1446هـ</option>
+            <option value="1447">1447هـ</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="openPlanItemModal()">➕ إضافة نشاط</button>
+        </div>
+      </div>
+      <div id="annualPlanGrid"></div>
+    </div>
+
+    <!-- ═══ SCALES ═══ -->
+    <div class="page-view" id="view-scales">
+      <div class="page-header">
+        <div><div class="page-title">📏 مقاييس التقييم الإرشادي</div><div class="page-sub">قيّم طلابك باستخدام مقاييس السلوك والقلق والدافعية</div></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="showScale('behavior')" id="scaleBtnBeh">⭐ مقياس السلوك</button>
+        <button class="btn btn-ghost" onclick="showScale('anxiety')" id="scaleBtnAnx">😰 مقياس القلق</button>
+        <button class="btn btn-ghost" onclick="showScale('motivation')" id="scaleBtnMot">🔥 مقياس الدافعية</button>
+      </div>
+      <div id="scaleContent"></div>
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header"><h3>📋 نتائج التقييمات المحفوظة</h3><span class="badge badge-blue" id="scaleResultsCount">0 تقييم</span></div>
+        <div style="overflow-x:auto;"><table class="tbl"><thead><tr><th>الطالب</th><th>الفصل</th><th>المقياس</th><th>الدرجة</th><th>التفسير</th><th>التاريخ</th><th></th></tr></thead><tbody id="scaleResultsBody"><tr><td colspan="7" class="empty-absence">لا توجد تقييمات بعد</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ═══ MONTHLY REPORT ═══ -->
+    <div class="page-view" id="view-monthlyreport">
+      <div class="page-header">
+        <div><div class="page-title">📝 التقرير الشهري الإرشادي</div><div class="page-sub">أنشئ تقارير احترافية شهرية بضغطة واحدة</div></div>
+        <button class="btn btn-primary btn-sm" onclick="generateMonthlyReport()">⚡ توليد التقرير</button>
+      </div>
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header"><h3>🗓️ إعدادات التقرير</h3></div>
+        <div class="card-body">
+          <div class="fg-row">
+            <div class="fg"><label>الشهر</label>
+              <select id="reportMonth">
+                <option value="1">محرم</option><option value="2">صفر</option><option value="3">ربيع الأول</option>
+                <option value="4">ربيع الآخر</option><option value="5">جمادى الأولى</option><option value="6">جمادى الآخرة</option>
+                <option value="7">رجب</option><option value="8" selected>شعبان</option><option value="9">رمضان</option>
+                <option value="10">شوال</option><option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+              </select>
+            </div>
+            <div class="fg"><label>السنة الهجرية</label><input type="text" id="reportYear" value="1446" placeholder="1446"></div>
+          </div>
+          <div class="fg-row">
+            <div class="fg"><label>أبرز الإنجازات</label><textarea id="reportAchiev" rows="3" placeholder="مثال: تنفيذ برنامج مهارات الثقة بالنفس لـ 20 طالباً..."></textarea></div>
+            <div class="fg"><label>أبرز التحديات</label><textarea id="reportChallenges" rows="3" placeholder="مثال: صعوبة التواصل مع بعض الأسر..."></textarea></div>
+          </div>
+          <div class="fg"><label>التوصيات للإدارة</label><textarea id="reportRecs" rows="2" placeholder="مثال: الحاجة لتفعيل غرفة الموارد..."></textarea></div>
+        </div>
+      </div>
+      <div id="monthlyReportOutput" style="display:none;"></div>
+    </div>
+
   </main>
+</div>
+
+<!-- ═══ modal الحالة الإرشادية ═══ -->
+<div class="modal-overlay" id="caseModal">
+  <div class="modal-box" style="width:640px;max-width:98vw;">
+    <div class="modal-header">
+      <h2 id="caseModalTitle">🗂️ تسجيل حالة إرشادية</h2>
+      <button class="modal-close" onclick="document.getElementById('caseModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="caseEditId">
+      <div class="fg-row">
+        <div class="fg"><label>اسم الطالب *</label><input type="text" id="caseFName" placeholder="اسم الطالب الكامل"></div>
+        <div class="fg"><label>الفصل / الصف</label><input type="text" id="caseFClass" placeholder="مثال: 3أ"></div>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>نوع الحالة</label>
+          <select id="caseFType">
+            <option>سلوكية</option><option>أكاديمية</option><option>اجتماعية</option><option>نفسية</option><option>أسرية</option>
+          </select>
+        </div>
+        <div class="fg"><label>درجة الأولوية</label>
+          <select id="caseFPriority">
+            <option value="عادية">🟢 عادية</option>
+            <option value="متوسطة">🟡 متوسطة</option>
+            <option value="عاجلة">🔴 عاجلة</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>وصف المشكلة وتحليلها</label><textarea id="caseFProblem" rows="3" placeholder="صف المشكلة بوضوح وما سبّبها..."></textarea></div>
+      <div class="fg"><label>خطة التدخل الإرشادي</label><textarea id="caseFPlan" rows="3" placeholder="الخطوات والأساليب المتبعة لمعالجة الحالة..."></textarea></div>
+      <div class="fg-row">
+        <div class="fg"><label>رقم ولي الأمر</label><input type="tel" id="caseFPhone" placeholder="05xxxxxxxx" dir="ltr"></div>
+        <div class="fg"><label>حالة المتابعة</label>
+          <select id="caseFStatus">
+            <option value="مفتوحة">⏳ تحت المتابعة</option>
+            <option value="مغلقة">✅ مغلقة / محسّنة</option>
+            <option value="عاجلة">🔴 عاجلة</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>ملاحظات المتابعة والنتائج</label><textarea id="caseFNotes" rows="2" placeholder="أحدث مستجدات الحالة..."></textarea></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px">
+        <button class="btn btn-ghost" onclick="document.getElementById('caseModal').classList.remove('open')">إلغاء</button>
+        <button class="btn btn-primary" onclick="saveCase()">💾 حفظ الحالة</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ modal نشاط الخطة ═══ -->
+<div class="modal-overlay" id="planModal">
+  <div class="modal-box" style="width:560px;">
+    <div class="modal-header">
+      <h2>📅 إضافة نشاط للخطة السنوية</h2>
+      <button class="modal-close" onclick="document.getElementById('planModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="planEditId">
+      <div class="fg-row">
+        <div class="fg"><label>اسم النشاط / البرنامج *</label><input type="text" id="planFTitle" placeholder="مثال: برنامج الثقة بالنفس"></div>
+        <div class="fg"><label>المحور</label>
+          <select id="planFAxis">
+            <option>سلوك</option><option>مهارات حياتية</option><option>وقاية</option><option>توعية</option><option>أكاديمي</option><option>أسري</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>الشهر</label>
+          <select id="planFMonth">
+            <option value="1">محرم</option><option value="2">صفر</option><option value="3">ربيع الأول</option>
+            <option value="4">ربيع الآخر</option><option value="5">جمادى الأولى</option><option value="6">جمادى الآخرة</option>
+            <option value="7">رجب</option><option value="8">شعبان</option><option value="9" selected>رمضان</option>
+            <option value="10">شوال</option><option value="11">ذو القعدة</option><option value="12">ذو الحجة</option>
+          </select>
+        </div>
+        <div class="fg"><label>الفئة المستهدفة</label><input type="text" id="planFTarget" placeholder="مثال: طلاب الصف الثالث"></div>
+      </div>
+      <div class="fg"><label>وصف النشاط وأهدافه</label><textarea id="planFDesc" rows="2" placeholder="أهداف البرنامج والأساليب المستخدمة..."></textarea></div>
+      <div class="fg-row">
+        <div class="fg"><label>الحالة</label>
+          <select id="planFStatus">
+            <option value="مخطط">📌 مخطط</option>
+            <option value="جاري">🔄 جاري التنفيذ</option>
+            <option value="منجز">✅ منجز</option>
+            <option value="ملغى">❌ ملغى</option>
+          </select>
+        </div>
+        <div class="fg"><label>عدد المستفيدين</label><input type="number" id="planFBenef" placeholder="0" min="0"></div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px">
+        <button class="btn btn-ghost" onclick="document.getElementById('planModal').classList.remove('open')">إلغاء</button>
+        <button class="btn btn-primary" onclick="savePlanItem()">💾 حفظ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ modal إضافة / تعديل طالب ═══ -->
+<div class="modal-overlay" id="stuModal">
+  <div class="modal-box" style="width:520px">
+    <div class="modal-header">
+      <h2 id="stuModalTitle">➕ إضافة طالب جديد</h2>
+      <button class="modal-close" onclick="closeStuModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="stuModalId">
+      <div class="fg-row">
+        <div class="fg">
+          <label>اسم الطالب *</label>
+          <input type="text" id="stuFName" placeholder="أحمد محمد علي">
+        </div>
+        <div class="fg">
+          <label>الفصل / الصف</label>
+          <input type="text" id="stuFClass" placeholder="3أ — الأول الابتدائي">
+        </div>
+      </div>
+      <div class="fg-row">
+        <div class="fg">
+          <label>رقم ولي الأمر</label>
+          <input type="tel" id="stuFPhone" placeholder="05xxxxxxxx" dir="ltr">
+        </div>
+        <div class="fg">
+          <label>اسم ولي الأمر</label>
+          <input type="text" id="stuFParentName" placeholder="محمد علي">
+        </div>
+      </div>
+      <div class="fg">
+        <label>ملاحظة إدارية (اختياري)</label>
+        <textarea id="stuFNote" placeholder="أي ملاحظات عن الطالب..."></textarea>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px">
+        <button class="btn btn-ghost" onclick="closeStuModal()">إلغاء</button>
+        <button class="btn btn-primary" onclick="saveStuModal()">💾 حفظ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ modal استيراد Excel ═══ -->
+<div class="modal-overlay" id="xlModal">
+  <div class="modal-box" style="width:580px">
+    <div class="modal-header">
+      <h2>📊 استيراد الطلاب من Excel / CSV</h2>
+      <button class="modal-close" onclick="document.getElementById('xlModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:rgba(21,101,192,.06);border:1px solid rgba(21,101,192,.18);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:.83rem;color:var(--sky);">
+        <strong>📋 الأعمدة المطلوبة في الملف:</strong><br>
+        <span style="direction:ltr;display:inline-block;margin-top:6px;font-family:monospace;color:var(--ink2)">اسم الطالب | الفصل | رقم ولي الأمر | اسم ولي الأمر | ملاحظة</span><br>
+        <span style="font-size:.76rem;color:var(--muted);margin-top:4px;display:block">الأعمدة الإلزامية: اسم الطالب فقط — الباقي اختياري</span>
+      </div>
+
+      <div class="xl-zone" id="xlDropZone">
+        <input type="file" id="xlFileInput" accept=".csv,.xlsx,.xls" onchange="handleXlFile(this.files[0])">
+        <div style="font-size:2.5rem;margin-bottom:10px">📂</div>
+        <div style="font-weight:800;color:var(--ink2);margin-bottom:6px">اسحب ملف Excel أو CSV هنا</div>
+        <div style="font-size:.80rem;color:var(--muted)">يدعم .csv و .xlsx و .xls</div>
+      </div>
+
+      <div style="text-align:center;color:var(--muted2);font-size:.82rem;margin:10px 0">— أو أدخل البيانات مباشرة —</div>
+
+      <div class="fg">
+        <label>لصق CSV مباشرة (سطر لكل طالب)</label>
+        <textarea id="xlPasteArea" rows="6" placeholder="أحمد محمد,3أ,0501234567,محمد علي&#10;سارة أحمد,2ب,0509876543,أحمد سارة&#10;..."></textarea>
+      </div>
+      <div style="font-size:.75rem;color:var(--muted);margin-bottom:14px">الفاصل: فاصلة أو tab — السطر الأول يمكن أن يكون رأس جدول (يُتجاهل تلقائياً)</div>
+
+      <div id="xlPreview" style="display:none;margin-bottom:14px"></div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn-ghost" onclick="document.getElementById('xlModal').classList.remove('open')">إلغاء</button>
+        <button class="btn btn-ghost" onclick="previewXlData()">👁 معاينة</button>
+        <button class="btn btn-primary" onclick="importXlData()">✅ استيراد</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ modal التقييم السلوكي الإداري ═══ -->
+<div class="modal-overlay" id="admBehModal">
+  <div class="modal-box" style="width:500px">
+    <div class="modal-header">
+      <h2 id="admBehTitle">⭐ التقييم السلوكي</h2>
+      <button class="modal-close" onclick="document.getElementById('admBehModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:.84rem;font-weight:700;color:var(--muted);margin-bottom:10px">التقييم العام للطالب</div>
+      <div class="beh-stars-row" id="admBehStarsRow">
+        <span style="font-size:.84rem;color:var(--muted);font-weight:700;margin-left:6px">النجوم:</span>
+        <button class="beh-star-btn" data-v="1" onclick="setAdmBehStar(1)">★</button>
+        <button class="beh-star-btn" data-v="2" onclick="setAdmBehStar(2)">★</button>
+        <button class="beh-star-btn" data-v="3" onclick="setAdmBehStar(3)">★</button>
+        <button class="beh-star-btn" data-v="4" onclick="setAdmBehStar(4)">★</button>
+        <button class="beh-star-btn" data-v="5" onclick="setAdmBehStar(5)">★</button>
+        <span id="admBehStarVal" style="font-size:.84rem;font-weight:900;color:var(--gold);margin-right:8px">0</span>
+      </div>
+
+      <div style="font-size:.80rem;font-weight:800;color:var(--muted);margin-bottom:6px">السمات الإيجابية</div>
+      <div class="beh-tags" id="admPosTags">
+        <button class="beh-tag pos" onclick="toggleAdmTag(this)">منضبط</button>
+        <button class="beh-tag pos" onclick="toggleAdmTag(this)">متعاون</button>
+        <button class="beh-tag pos" onclick="toggleAdmTag(this)">مجتهد</button>
+        <button class="beh-tag pos" onclick="toggleAdmTag(this)">مؤدّب</button>
+        <button class="beh-tag pos" onclick="toggleAdmTag(this)">قيادي</button>
+        <button class="beh-tag pos" onclick="toggleAdmTag(this)">إيجابي</button>
+        <button class="beh-tag pos" onclick="toggleAdmTag(this)">مبدع</button>
+      </div>
+
+      <div style="font-size:.80rem;font-weight:800;color:var(--muted);margin:12px 0 6px">نقاط تحتاج متابعة</div>
+      <div class="beh-tags" id="admNegTags">
+        <button class="beh-tag neg" onclick="toggleAdmTag(this)">كثير الغياب</button>
+        <button class="beh-tag neg" onclick="toggleAdmTag(this)">تأخر متكرر</button>
+        <button class="beh-tag neg" onclick="toggleAdmTag(this)">شغب</button>
+        <button class="beh-tag neg" onclick="toggleAdmTag(this)">ضعف تركيز</button>
+        <button class="beh-tag neg" onclick="toggleAdmTag(this)">لا يؤدي واجباته</button>
+        <button class="beh-tag neg" onclick="toggleAdmTag(this)">خلافات مع الزملاء</button>
+      </div>
+
+      <div class="fg" style="margin-top:14px">
+        <label>ملاحظات إدارية مفصّلة</label>
+        <textarea id="admBehNotes" rows="4" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+      </div>
+      <input type="hidden" id="admBehStuId">
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px">
+        <button class="btn btn-ghost" onclick="document.getElementById('admBehModal').classList.remove('open')">إلغاء</button>
+        <button class="btn btn-primary" onclick="saveAdmBeh()">💾 حفظ التقييم</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal-overlay" id="detailModal">
   <div class="modal-box">
     <div class="modal-header"><h2 id="modalTitle">التفاصيل</h2><button class="modal-close" onclick="closeModal()">×</button></div>
     <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ═══ modal الدرجات ═══ -->
+<div class="modal-overlay" id="gradesModal">
+  <div class="modal-box" style="width:720px;max-width:98vw;">
+    <div class="modal-header">
+      <h2 id="gradesModalTitle">📒 المستوى الدراسي</h2>
+      <button class="modal-close" onclick="document.getElementById('gradesModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body" id="gradesModalBody"></div>
+  </div>
+</div>
+
+<!-- ═══ modal السلوك ═══ -->
+<div class="modal-overlay" id="behaviorModal">
+  <div class="modal-box" style="width:680px;max-width:98vw;">
+    <div class="modal-header">
+      <h2 id="behaviorModalTitle">⭐ التقييم السلوكي</h2>
+      <button class="modal-close" onclick="document.getElementById('behaviorModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body" id="behaviorModalBody"></div>
+  </div>
+</div>
+
+
+<!-- ═══ modal لقاء ولي الأمر ═══ -->
+<div class="modal-overlay" id="meetingModal">
+  <div class="modal-box" style="width:560px">
+    <div class="modal-header">
+      <h2 id="meetingModalTitle">🤝 إضافة لقاء جديد</h2>
+      <button class="modal-close" onclick="document.getElementById('meetingModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="meetingEditId">
+      <div class="fg-row">
+        <div class="fg"><label>اسم الطالب *</label><input type="text" id="meetFStudent" placeholder="اسم الطالب"></div>
+        <div class="fg"><label>اسم ولي الأمر</label><input type="text" id="meetFParent" placeholder="اسم ولي الأمر"></div>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>تاريخ اللقاء *</label><input type="date" id="meetFDate"></div>
+        <div class="fg"><label>نوع اللقاء *</label>
+          <select id="meetFType">
+            <option value="حضوري">🏫 حضوري</option>
+            <option value="هاتفي">📞 هاتفي</option>
+            <option value="واتساب">📱 واتساب</option>
+            <option value="مرئي">🎥 مرئي</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>ملخص اللقاء</label><textarea id="meetFSummary" rows="3" placeholder="ملخص ما تم مناقشته في اللقاء..."></textarea></div>
+      <div class="fg"><label>الإجراء المتفق عليه</label><textarea id="meetFAction" rows="2" placeholder="الإجراءات والخطوات المتفق عليها مع ولي الأمر..."></textarea></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px">
+        <button class="btn btn-ghost" onclick="document.getElementById('meetingModal').classList.remove('open')">إلغاء</button>
+        <button class="btn btn-primary" onclick="saveMeeting()">💾 حفظ اللقاء</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ modal ملاحظة ═══ -->
+<div class="modal-overlay" id="noteModal">
+  <div class="modal-box" style="width:540px">
+    <div class="modal-header">
+      <h2 id="noteModalTitle">📝 إضافة ملاحظة جديدة</h2>
+      <button class="modal-close" onclick="document.getElementById('noteModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="noteEditId">
+      <div class="fg-row">
+        <div class="fg"><label>اسم الطالب *</label><input type="text" id="noteFStudent" placeholder="اسم الطالب"></div>
+        <div class="fg"><label>الفصل</label><input type="text" id="noteFClass" placeholder="مثال: 3أ"></div>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>نوع الملاحظة</label>
+          <select id="noteFType">
+            <option value="عام">📋 عام</option>
+            <option value="أكاديمي">📚 أكاديمي</option>
+            <option value="سلوكي">⭐ سلوكي</option>
+            <option value="تواصل مع ولي الأمر">📱 تواصل مع ولي الأمر</option>
+          </select>
+        </div>
+        <div class="fg"><label>الأولوية</label>
+          <select id="noteFPriority">
+            <option value="عادي">✅ عادي</option>
+            <option value="مهم">⚠️ مهم</option>
+            <option value="عاجل">🚨 عاجل</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>الملاحظة *</label><textarea id="noteFContent" rows="4" placeholder="اكتب الملاحظة هنا..."></textarea></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px">
+        <button class="btn btn-ghost" onclick="document.getElementById('noteModal').classList.remove('open')">إلغاء</button>
+        <button class="btn btn-primary" onclick="saveNote()">💾 حفظ الملاحظة</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -436,9 +1033,11 @@ setInterval(()=>{ const e=document.getElementById('liveTime'); if(e) e.textConte
 // DRAG & DROP
 // ════════════════════════════════════════════
 const dz = document.getElementById('dropZone');
-dz.addEventListener('dragover', e=>{ e.preventDefault(); dz.classList.add('drag-over'); });
-dz.addEventListener('dragleave', ()=> dz.classList.remove('drag-over'));
-dz.addEventListener('drop', e=>{ e.preventDefault(); dz.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+if(dz){
+  dz.addEventListener('dragover', e=>{ e.preventDefault(); dz.classList.add('drag-over'); });
+  dz.addEventListener('dragleave', ()=> dz.classList.remove('drag-over'));
+  dz.addEventListener('drop', e=>{ e.preventDefault(); dz.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+}
 
 // ════════════════════════════════════════════
 // FILE HANDLING
@@ -484,6 +1083,8 @@ function importClass(data, fileName){
     studentCount:data.studentCount||(data.students||[]).length,
     students:    data.students||[],
     attendance:  data.attendance||{},
+    grades:      data.grades||null,    // المستوى الدراسي
+    behavior:    data.behavior||null,  // التقييم السلوكي
     importedAt:  new Date().toISOString(),
     fileName,
     periodLabel: data._periodLabel||null,
@@ -510,12 +1111,18 @@ function renderFileList(){
     const d=new Date(c.importedAt).toLocaleString('ar-EG');
     let absCnt=0;
     Object.values(c.attendance||{}).forEach(day=>Object.values(day).forEach(v=>{ if(v==='a'||v==='e') absCnt++; }));
+    const hasGrades  = c.grades?.added;
+    const hasBehavior= c.behavior?.added;
     return `
     <div class="file-item ${c.isNew?'new':''}">
       <div class="file-icon">📄</div>
       <div class="file-info">
         <div class="file-name">${c.fileName}</div>
         <div class="file-meta">📚 ${c.className} &nbsp;·&nbsp; 👨‍🏫 ${c.teacherName} &nbsp;·&nbsp; 👥 ${c.studentCount} طالب &nbsp;·&nbsp; 🚫 ${absCnt} حالة &nbsp;·&nbsp;${c.periodLabel ? ` 📅 ${c.periodLabel} &nbsp;·&nbsp;` : ''} 🕐 ${d}</div>
+        <div style="margin-top:5px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:.70rem;font-weight:800;padding:2px 9px;border-radius:99px;${hasGrades?'background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.28);color:#b45309':'background:rgba(100,116,139,.09);border:1px solid rgba(100,116,139,.18);color:#94a3b8'}">📒 درجات ${hasGrades?'✓':'غير مضافة'}</span>
+          <span style="font-size:.70rem;font-weight:800;padding:2px 9px;border-radius:99px;${hasBehavior?'background:rgba(124,58,237,.10);border:1px solid rgba(124,58,237,.25);color:#7c3aed':'background:rgba(100,116,139,.09);border:1px solid rgba(100,116,139,.18);color:#94a3b8'}">⭐ سلوك ${hasBehavior?'✓':'غير مضاف'}</span>
+        </div>
       </div>
       <button class="file-remove" onclick="removeFile(${i})" title="حذف">🗑</button>
     </div>`;
@@ -701,7 +1308,9 @@ function renderDashboard(){
 
       <div class="class-card-footer">
         <div style="font-size:.72rem;color:var(--muted2)">📅 ${fmt(latest)}</div>
-        <div style="display:flex;gap:8px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          ${cls.grades?.added?`<button class="btn btn-ghost btn-sm" style="color:#b45309;border-color:rgba(245,158,11,.30);" onclick="openGradesModal('${cls.classId}')">📒 الدرجات</button>`:''}
+          ${cls.behavior?.added?`<button class="btn btn-ghost btn-sm" style="color:#7c3aed;border-color:rgba(124,58,237,.28);" onclick="openBehaviorModal('${cls.classId}')">⭐ السلوك</button>`:''}
           <button class="btn btn-ghost btn-sm" onclick="openDetail('${cls.classId}','${latest}')">🔍 تفاصيل</button>
           ${(absentList.length+excusedList.length)>0?`<button class="reviewed-btn ${hasUnrev?'pending':'done'}" id="rb_${cls.classId}_${latest}" onclick="toggleReview('${cls.classId}','${latest}',this)">${hasUnrev?'👁 مراجعة':'✅ تمت'}</button>`:''}
         </div>
@@ -1066,6 +1675,13 @@ function showView(name){
   if(name==='dashboard')  renderDashboard();
   if(name==='absences')   { populateClassFilter(); renderAbsTable(); }
   if(name==='analytics')  renderAnalytics();
+  if(name==='students')   renderStudentsPage();
+  if(name==='meetings')   renderMeetings();
+  if(name==='notes')       renderNotes();
+  if(name==='cases')      renderCasesPage();
+  if(name==='annualplan') renderAnnualPlan();
+  if(name==='scales')     { showScale('behavior'); renderScaleResults(); }
+  if(name==='monthlyreport') {}
 }
 
 function renderAll(){
@@ -1081,6 +1697,673 @@ function toast(msg,type='info'){
 }
 
 // ════════════════════════════════════════════
+// 👥 STUDENTS STORE
+// ════════════════════════════════════════════
+const STU_KEY = 'bs_admin_students';
+function getStudents()  { try{ return JSON.parse(localStorage.getItem(STU_KEY)||'[]'); }catch(e){ return []; } }
+function saveStudents(d){ localStorage.setItem(STU_KEY, JSON.stringify(d)); }
+
+// ════════════════════════════════════════════
+// 👥 RENDER STUDENTS PAGE
+// ════════════════════════════════════════════
+function renderStudentsPage(){
+  const all  = getStudents();
+  const q    = (document.getElementById('stuSearchInput')?.value||'').trim().toLowerCase();
+  const cls  = document.getElementById('stuFilterClass')?.value||'all';
+  const beh  = document.getElementById('stuFilterBeh')?.value||'all';
+
+  // تحديث فلتر الفصول
+  const clsSel = document.getElementById('stuFilterClass');
+  if(clsSel){
+    const classes = [...new Set(all.map(s=>s.cls).filter(Boolean))].sort();
+    const curVal  = clsSel.value;
+    clsSel.innerHTML = '<option value="all">كل الفصول</option>' +
+      classes.map(c=>`<option value="${c}" ${c===curVal?'selected':''}>${c}</option>`).join('');
+  }
+
+  // KPIs
+  const evaluated = all.filter(s=>s.adm_behavior?.stars>0);
+  document.getElementById('stuKpiTotal').textContent = all.length;
+  document.getElementById('stuKpiEval').textContent  = evaluated.length;
+  document.getElementById('stuKpiGood').textContent  = all.filter(s=>(s.adm_behavior?.stars||0)>=4).length;
+  document.getElementById('stuKpiWatch').textContent = all.filter(s=>s.adm_behavior?.stars>0&&s.adm_behavior.stars<=2).length;
+  document.getElementById('sideStudentCount').textContent = all.length;
+  document.getElementById('stuPageSub').textContent = `${all.length} طالب مسجّل — ${evaluated.length} تم تقييمهم`;
+
+  // فلترة
+  let filtered = all.filter(s=>{
+    if(q && !s.name.toLowerCase().includes(q) && !(s.parentName||'').toLowerCase().includes(q)) return false;
+    if(cls!=='all' && s.cls!==cls) return false;
+    const stars = s.adm_behavior?.stars||0;
+    if(beh==='high'  && stars<4)   return false;
+    if(beh==='mid'   && (stars<3||stars>=4)) return false;
+    if(beh==='low'   && (stars===0||stars>=3)) return false;
+    if(beh==='none'  && stars>0)   return false;
+    return true;
+  });
+
+  const grid  = document.getElementById('stuGrid');
+  const empty = document.getElementById('stuEmpty');
+  if(!filtered.length){ grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+
+  grid.innerHTML = filtered.map((s,i)=>{
+    const stars    = s.adm_behavior?.stars||0;
+    const starsHtml= [1,2,3,4,5].map(n=>`<span class="stu-star ${n<=stars?'on':''}">${n<=stars?'★':'☆'}</span>`).join('');
+    const tags     = (s.adm_behavior?.tags||[]).slice(0,3).map(t=>`<span style="font-size:.68rem;padding:2px 8px;border-radius:99px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18);color:#7c3aed;display:inline-block;">${t}</span>`).join(' ');
+    const waLink   = s.phone?`<a class="wa-btn" href="https://wa.me/${s.phone.replace(/\D/g,'').replace(/^0/,'966')}" target="_blank">واتساب</a>`:'';
+    const noteLine = s.note?`<div class="stu-beh" style="margin-top:8px"><div class="stu-beh-label">📝 ملاحظة إدارية</div>${s.note}</div>`:'';
+    const behLine  = s.adm_behavior?.notes?`<div class="stu-beh" style="margin-top:6px"><div class="stu-beh-label" style="color:#7c3aed">⭐ التقييم السلوكي</div><div class="stu-stars" style="margin-bottom:4px">${starsHtml}</div>${tags?`<div style="margin-bottom:4px">${tags}</div>`:''}${s.adm_behavior.notes}</div>`:
+      stars>0?`<div class="stu-beh" style="margin-top:6px"><div class="stu-beh-label" style="color:#7c3aed">⭐ التقييم السلوكي</div><div class="stu-stars">${starsHtml}</div>${tags?`<div style="margin-top:4px">${tags}</div>`:''}</div>`:'';
+    return `<div class="stu-card" style="animation-delay:${i*.03}s">
+      <div class="stu-card-top">
+        <div class="stu-avatar">${(s.name||'؟').charAt(0)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="stu-name">${s.name}</div>
+          <div class="stu-class">${s.cls||'—'}</div>
+        </div>
+      </div>
+      ${s.phone?`<div class="stu-phone">📱 ${s.phone} ${s.parentName?`· ${s.parentName}`:''}</div>`:''}
+      ${noteLine}${behLine}
+      <div class="stu-card-actions">
+        <button class="btn btn-ghost btn-xs" onclick="openEditStu('${s.id}')">✏️ تعديل</button>
+        <button class="btn btn-ghost btn-xs" style="color:#7c3aed;border-color:rgba(124,58,237,.25)" onclick="openAdmBeh('${s.id}')">⭐ تقييم</button>
+        ${waLink}
+        <button class="btn btn-danger btn-xs" onclick="deleteStu('${s.id}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════
+// ➕ ADD / EDIT STUDENT MODAL
+// ════════════════════════════════════════════
+function openAddStuModal(){
+  document.getElementById('stuModalTitle').textContent = '➕ إضافة طالب جديد';
+  document.getElementById('stuModalId').value    = '';
+  document.getElementById('stuFName').value      = '';
+  document.getElementById('stuFClass').value     = '';
+  document.getElementById('stuFPhone').value     = '';
+  document.getElementById('stuFParentName').value= '';
+  document.getElementById('stuFNote').value      = '';
+  document.getElementById('stuModal').classList.add('open');
+  setTimeout(()=>document.getElementById('stuFName').focus(),100);
+}
+
+function openEditStu(id){
+  const s = getStudents().find(x=>x.id===id); if(!s) return;
+  document.getElementById('stuModalTitle').textContent  = '✏️ تعديل بيانات الطالب';
+  document.getElementById('stuModalId').value           = s.id;
+  document.getElementById('stuFName').value             = s.name||'';
+  document.getElementById('stuFClass').value            = s.cls||'';
+  document.getElementById('stuFPhone').value            = s.phone||'';
+  document.getElementById('stuFParentName').value       = s.parentName||'';
+  document.getElementById('stuFNote').value             = s.note||'';
+  document.getElementById('stuModal').classList.add('open');
+}
+
+function closeStuModal(){ document.getElementById('stuModal').classList.remove('open'); }
+
+function saveStuModal(){
+  const name = document.getElementById('stuFName').value.trim();
+  if(!name){ toast('اسم الطالب مطلوب','error'); return; }
+  const all = getStudents();
+  const id  = document.getElementById('stuModalId').value;
+  const entry = {
+    id:         id||('s'+Date.now()),
+    name,
+    cls:        document.getElementById('stuFClass').value.trim(),
+    phone:      document.getElementById('stuFPhone').value.trim(),
+    parentName: document.getElementById('stuFParentName').value.trim(),
+    note:       document.getElementById('stuFNote').value.trim(),
+    createdAt:  id?undefined:new Date().toISOString()
+  };
+  if(id){
+    const idx=all.findIndex(x=>x.id===id);
+    if(idx>=0){ entry.adm_behavior=all[idx].adm_behavior; entry.createdAt=all[idx].createdAt; all[idx]=entry; }
+  } else {
+    all.push(entry);
+  }
+  saveStudents(all);
+  closeStuModal();
+  renderStudentsPage();
+  toast(id?'✅ تم تحديث بيانات الطالب':'✅ تمت إضافة الطالب','success');
+}
+
+function deleteStu(id){
+  if(!confirm('هل تريد حذف هذا الطالب؟')) return;
+  saveStudents(getStudents().filter(s=>s.id!==id));
+  renderStudentsPage();
+  toast('تم حذف الطالب','info');
+}
+
+// ════════════════════════════════════════════
+// ⭐ ADMIN BEHAVIOR
+// ════════════════════════════════════════════
+let _admBehStars = 0;
+
+function openAdmBeh(id){
+  const s = getStudents().find(x=>x.id===id); if(!s) return;
+  document.getElementById('admBehTitle').textContent = `⭐ تقييم سلوك — ${s.name}`;
+  document.getElementById('admBehStuId').value = id;
+  // reset tags
+  document.querySelectorAll('#admPosTags .beh-tag, #admNegTags .beh-tag').forEach(t=>t.classList.remove('sel'));
+  // reload saved
+  const beh = s.adm_behavior||{};
+  _admBehStars = beh.stars||0;
+  document.getElementById('admBehNotes').value = beh.notes||'';
+  refreshAdmBehStars();
+  (beh.tags||[]).forEach(tag=>{
+    document.querySelectorAll('#admPosTags .beh-tag, #admNegTags .beh-tag').forEach(btn=>{
+      if(btn.textContent.trim()===tag) btn.classList.add('sel');
+    });
+  });
+  document.getElementById('admBehModal').classList.add('open');
+}
+
+function setAdmBehStar(n){
+  _admBehStars = _admBehStars===n ? 0 : n;
+  refreshAdmBehStars();
+}
+
+function refreshAdmBehStars(){
+  document.querySelectorAll('#admBehStarsRow .beh-star-btn').forEach(btn=>{
+    btn.classList.toggle('on', parseInt(btn.dataset.v) <= _admBehStars);
+  });
+  document.getElementById('admBehStarVal').textContent = _admBehStars||'0';
+}
+
+function toggleAdmTag(btn){ btn.classList.toggle('sel'); }
+
+function saveAdmBeh(){
+  const id    = document.getElementById('admBehStuId').value;
+  const notes = document.getElementById('admBehNotes').value.trim();
+  const tags  = [...document.querySelectorAll('#admPosTags .beh-tag.sel, #admNegTags .beh-tag.sel')].map(b=>b.textContent.trim());
+  const all   = getStudents();
+  const idx   = all.findIndex(s=>s.id===id); if(idx<0) return;
+  all[idx].adm_behavior = { stars:_admBehStars, tags, notes, updatedAt:new Date().toISOString() };
+  saveStudents(all);
+  document.getElementById('admBehModal').classList.remove('open');
+  renderStudentsPage();
+  toast('✅ تم حفظ التقييم السلوكي','success');
+}
+
+// ════════════════════════════════════════════
+// 📊 EXCEL / CSV IMPORT
+// ════════════════════════════════════════════
+let _xlParsed = [];
+
+function openXlModal(){
+  _xlParsed=[];
+  document.getElementById('xlPasteArea').value='';
+  document.getElementById('xlPreview').style.display='none';
+  document.getElementById('xlModal').classList.add('open');
+}
+
+const xlDrop = document.getElementById('xlDropZone');
+if(xlDrop){
+  xlDrop.addEventListener('dragover', e=>{ e.preventDefault(); xlDrop.classList.add('drag-over'); });
+  xlDrop.addEventListener('dragleave', ()=>xlDrop.classList.remove('drag-over'));
+  xlDrop.addEventListener('drop', e=>{ e.preventDefault(); xlDrop.classList.remove('drag-over'); handleXlFile(e.dataTransfer.files[0]); });
+}
+
+function handleXlFile(file){
+  if(!file) return;
+  const ext = file.name.split('.').pop().toLowerCase();
+  if(ext==='csv'){
+    const reader = new FileReader();
+    reader.onload = e=>{ document.getElementById('xlPasteArea').value=e.target.result; previewXlData(); };
+    reader.readAsText(file, 'UTF-8');
+  } else {
+    // xlsx — نحتاج SheetJS، إن لم يكن موجوداً نرشد المستخدم لـ CSV
+    toast('تلميح: حوّل ملف Excel لـ CSV (حفظ باسم → CSV) للاستيراد المباشر','info');
+  }
+}
+
+function _parseCSVLine(line){
+  // يدعم الفاصلة والـ tab والفاصلة المنقوطة
+  return line.split(/,|\t|;/).map(c=>c.trim().replace(/^"|"$/g,''));
+}
+
+function previewXlData(){
+  const raw  = document.getElementById('xlPasteArea').value.trim();
+  if(!raw){ toast('الحقل فارغ','error'); return; }
+  const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
+
+  // تحقق إذا السطر الأول رأس جدول (يحتوي "اسم" أو "name")
+  let start = 0;
+  const firstCells = _parseCSVLine(lines[0]).map(c=>c.toLowerCase());
+  if(firstCells.some(c=>c.includes('اسم')||c.includes('name')||c.includes('طالب'))) start=1;
+
+  _xlParsed = lines.slice(start).map(line=>{
+    const cells = _parseCSVLine(line);
+    return {
+      id:         's'+Date.now()+Math.random().toString(36).slice(2,6),
+      name:       cells[0]||'',
+      cls:        cells[1]||'',
+      phone:      cells[2]||'',
+      parentName: cells[3]||'',
+      note:       cells[4]||'',
+      createdAt:  new Date().toISOString()
+    };
+  }).filter(s=>s.name);
+
+  const prev = document.getElementById('xlPreview');
+  if(!_xlParsed.length){ prev.style.display='none'; toast('لم يتم التعرف على بيانات','error'); return; }
+
+  prev.style.display='block';
+  prev.innerHTML=`
+    <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.25);border-radius:12px;padding:12px 16px;margin-bottom:10px;font-size:.84rem;color:#059669;font-weight:700;">
+      ✅ تم التعرف على ${_xlParsed.length} طالب — معاينة أول 5:
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="tbl">
+      <thead><tr><th>الاسم</th><th>الفصل</th><th>رقم الولي</th><th>اسم الولي</th><th>ملاحظة</th></tr></thead>
+      <tbody>${_xlParsed.slice(0,5).map(s=>`<tr><td>${s.name}</td><td>${s.cls||'—'}</td><td dir="ltr">${s.phone||'—'}</td><td>${s.parentName||'—'}</td><td>${s.note||'—'}</td></tr>`).join('')}
+      ${_xlParsed.length>5?`<tr><td colspan="5" style="text-align:center;color:var(--muted2)">... و${_xlParsed.length-5} آخرين</td></tr>`:''}</tbody>
+    </table></div>`;
+  toast(`تم التعرف على ${_xlParsed.length} طالب — اضغط استيراد للتأكيد`,'info');
+}
+
+function importXlData(){
+  if(!_xlParsed.length){ previewXlData(); if(!_xlParsed.length) return; }
+  const existing = getStudents();
+  let added=0, skipped=0;
+  _xlParsed.forEach(s=>{
+    if(existing.find(x=>x.name===s.name&&x.cls===s.cls)){ skipped++; return; }
+    existing.push(s); added++;
+  });
+  saveStudents(existing);
+  document.getElementById('xlModal').classList.remove('open');
+  renderStudentsPage();
+  toast(`✅ تم استيراد ${added} طالب${skipped>0?` (${skipped} موجود مسبقاً تم تجاهله)`:''}`, 'success');
+}
+
+// ════════════════════════════════════════════
+// ⬇ EXPORT STUDENTS CSV
+// ════════════════════════════════════════════
+function exportStudentsCSV(){
+  const all = getStudents();
+  if(!all.length){ toast('لا يوجد طلاب','error'); return; }
+  const h = ['#','اسم الطالب','الفصل','رقم ولي الأمر','اسم ولي الأمر','ملاحظة','التقييم (نجوم)','السمات','ملاحظات سلوكية'];
+  const rows = all.map((s,i)=>[
+    i+1, s.name, s.cls||'', s.phone||'', s.parentName||'', s.note||'',
+    s.adm_behavior?.stars||'', (s.adm_behavior?.tags||[]).join('|'), s.adm_behavior?.notes||''
+  ]);
+  const csv='\uFEFF'+[h,...rows].map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download=`طلاب_البشرى_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click(); toast('✅ تم التصدير','success');
+}
+
+// إغلاق modals عند الضغط على الخلفية
+['stuModal','xlModal','admBehModal'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open'); });
+});
+
+// ════════════════════════════════════════════
+// 📒 GRADES MODAL
+// ════════════════════════════════════════════
+function openGradesModal(classId){
+  const cls = getStore().find(c=>c.classId===classId);
+  if(!cls || !cls.grades?.added){ toast('لا توجد درجات مضافة لهذا الفصل','info'); return; }
+
+  const g = cls.grades;
+  document.getElementById('gradesModalTitle').textContent = `📒 المستوى الدراسي — ${cls.className} | ${cls.teacherName}`;
+
+  // حساب إحصائيات سريعة
+  const addedStudents = (g.students||[]).filter(s=>s.added);
+  const avgPct = addedStudents.length
+    ? Math.round(addedStudents.reduce((s,x)=>s+x.percentage,0)/addedStudents.length)
+    : 0;
+  const excellent = addedStudents.filter(s=>s.percentage>=90).length;
+  const good      = addedStudents.filter(s=>s.percentage>=60&&s.percentage<90).length;
+  const weak      = addedStudents.filter(s=>s.percentage<60).length;
+
+  // رأس الجدول
+  const colHeaders = (g.columns||[]).map(c=>`<th style="text-align:center">${c.name}<br><span style="font-size:.68rem;color:var(--muted);font-weight:500">(${c.max})</span></th>`).join('');
+
+  // صفوف الطلاب
+  const rows = (g.students||[]).map((s,i)=>{
+    if(!s.added) return `<tr><td style="text-align:center;color:var(--muted2)">${i+1}</td><td>${s.name}</td>${(g.columns||[]).map(()=>`<td style="text-align:center;color:var(--muted2)">—</td>`).join('')}<td style="text-align:center;color:var(--muted2)">—</td><td style="text-align:center;color:var(--muted2)">—</td></tr>`;
+    const clr = s.percentage>=90?'var(--mint)':s.percentage>=75?'var(--sky)':s.percentage>=60?'var(--gold)':'var(--ember)';
+    const subjCells = (s.subjects||[]).map(sub=>{
+      const pct = sub.max>0?Math.round((sub.grade||0)/sub.max*100):0;
+      const c2  = pct>=90?'var(--mint)':pct>=60?'var(--sky)':'var(--ember)';
+      return `<td style="text-align:center;font-weight:700;color:${c2}">${sub.grade!==null?sub.grade:'—'}</td>`;
+    }).join('');
+    return `<tr>
+      <td style="text-align:center;color:var(--muted2)">${i+1}</td>
+      <td><strong>${s.name}</strong></td>
+      ${subjCells}
+      <td style="text-align:center;font-weight:900;color:${clr}">${s.total}</td>
+      <td style="text-align:center">
+        <span style="font-weight:900;color:${clr}">${s.percentage}%</span>
+        <div style="font-size:.68rem;color:var(--muted);margin-top:2px">${s.level}</div>
+        <div style="margin-top:4px;height:4px;background:var(--border);border-radius:99px;overflow:hidden;">
+          <div style="height:100%;width:${s.percentage}%;background:${clr};border-radius:99px;"></div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('gradesModalBody').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+      <div class="kpi blue" style="padding:14px;"><span class="kpi-icon">👥</span><div class="kpi-val">${addedStudents.length}</div><div class="kpi-label">لديهم درجات</div></div>
+      <div class="kpi green" style="padding:14px;"><span class="kpi-icon">🏆</span><div class="kpi-val">${excellent}</div><div class="kpi-label">ممتاز (90%+)</div></div>
+      <div class="kpi gold" style="padding:14px;"><span class="kpi-icon">📊</span><div class="kpi-val">${good}</div><div class="kpi-label">جيد (60-89%)</div></div>
+      <div class="kpi red" style="padding:14px;"><span class="kpi-icon">⚠️</span><div class="kpi-val">${weak}</div><div class="kpi-label">يحتاج دعم</div></div>
+    </div>
+    <div style="background:rgba(21,101,192,.06);border:1px solid rgba(21,101,192,.15);border-radius:12px;padding:10px 16px;margin-bottom:16px;font-size:.84rem;color:var(--sky);font-weight:700;">
+      📈 متوسط الفصل: ${avgPct}% &nbsp;·&nbsp; ${g.columns?.length||0} مادة &nbsp;·&nbsp; آخر تحديث: ${g.exportedAt?new Date(g.exportedAt).toLocaleDateString('ar-EG'):'—'}
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>الطالب</th>${colHeaders}<th style="text-align:center">المجموع</th><th style="text-align:center">التقييم</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+
+  document.getElementById('gradesModal').classList.add('open');
+}
+
+// ════════════════════════════════════════════
+// ⭐ BEHAVIOR MODAL
+// ════════════════════════════════════════════
+function openBehaviorModal(classId){
+  const cls = getStore().find(c=>c.classId===classId);
+  if(!cls || !cls.behavior?.added){ toast('لا توجد تقييمات سلوكية لهذا الفصل','info'); return; }
+
+  const b = cls.behavior;
+  document.getElementById('behaviorModalTitle').textContent = `⭐ التقييم السلوكي — ${cls.className} | ${cls.teacherName}`;
+
+  const addedStudents = (b.students||[]).filter(s=>s.added);
+  const avgStars = addedStudents.length
+    ? (addedStudents.reduce((s,x)=>s+x.averageStars,0)/addedStudents.length).toFixed(1)
+    : 0;
+
+  function starsHtml(n){
+    const full = Math.round(n);
+    return [1,2,3,4,5].map(i=>`<span style="color:${i<=full?'var(--gold)':'var(--muted2)'}">★</span>`).join('');
+  }
+
+  const rows = (b.students||[]).map((s,i)=>{
+    if(!s.added) return `<tr><td style="text-align:center;color:var(--muted2)">${i+1}</td><td>${s.name}</td><td colspan="4" style="text-align:center;color:var(--muted2)">لم يُقيَّم بعد</td></tr>`;
+    const starClr = s.averageStars>=4?'var(--mint)':s.averageStars>=3?'var(--gold)':'var(--ember)';
+    const tagsHtml = (s.commonTags||[]).slice(0,4).map(t=>`<span style="font-size:.68rem;padding:2px 8px;border-radius:99px;background:rgba(124,58,237,.09);border:1px solid rgba(124,58,237,.20);color:#7c3aed;display:inline-block;margin:1px;">${t}</span>`).join('');
+    return `<tr>
+      <td style="text-align:center;color:var(--muted2)">${i+1}</td>
+      <td><strong>${s.name}</strong></td>
+      <td style="text-align:center">${starsHtml(s.averageStars)} <span style="font-size:.78rem;color:${starClr};font-weight:800;margin-right:4px">${s.averageStars}</span></td>
+      <td style="text-align:center;color:var(--muted);font-size:.82rem">${s.totalDaysEvaluated} يوم</td>
+      <td>${tagsHtml||'<span style="color:var(--muted2);font-size:.78rem">—</span>'}</td>
+      <td style="text-align:center;font-size:.76rem;color:var(--muted2)">${s.lastEvalDate||'—'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('behaviorModalBody').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;">
+      <div class="kpi plum" style="padding:14px;"><span class="kpi-icon">👥</span><div class="kpi-val">${addedStudents.length}</div><div class="kpi-label">تم تقييمهم</div></div>
+      <div class="kpi gold" style="padding:14px;"><span class="kpi-icon">⭐</span><div class="kpi-val">${avgStars}</div><div class="kpi-label">متوسط النجوم</div></div>
+      <div class="kpi green" style="padding:14px;"><span class="kpi-icon">✅</span><div class="kpi-val">${(b.students||[]).filter(s=>s.added&&s.averageStars>=4).length}</div><div class="kpi-label">سلوك ممتاز (4+)</div></div>
+    </div>
+    <div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.18);border-radius:12px;padding:10px 16px;margin-bottom:16px;font-size:.84rem;color:#7c3aed;font-weight:700;">
+      📅 آخر تحديث: ${b.exportedAt?new Date(b.exportedAt).toLocaleDateString('ar-EG'):'—'}
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>الطالب</th><th style="text-align:center">متوسط النجوم</th><th style="text-align:center">أيام التقييم</th><th>السمات الشائعة</th><th style="text-align:center">آخر تقييم</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+
+  document.getElementById('behaviorModal').classList.add('open');
+}
+
+// ════════════════════════════════════════════
+// 🧠 COUNSELOR PAGE
+// ════════════════════════════════════════════
+// ════════════════════════════════════════════
+// 🤝 MEETINGS SYSTEM
+// ════════════════════════════════════════════
+const MEETINGS_KEY = 'bs_meetings';
+function getMeetings(){ try{ return JSON.parse(localStorage.getItem(MEETINGS_KEY)||'[]'); }catch(e){ return []; } }
+function saveMeetings(d){ localStorage.setItem(MEETINGS_KEY, JSON.stringify(d)); }
+
+function openMeetingModal(id){
+  document.getElementById('meetingEditId').value = id||'';
+  if(id){
+    const item = getMeetings().find(x=>x.id===id);
+    if(!item) return;
+    document.getElementById('meetingModalTitle').textContent = '✏️ تعديل اللقاء';
+    document.getElementById('meetFStudent').value = item.student||'';
+    document.getElementById('meetFParent').value  = item.parent||'';
+    document.getElementById('meetFDate').value    = item.date||'';
+    document.getElementById('meetFType').value    = item.type||'حضوري';
+    document.getElementById('meetFSummary').value = item.summary||'';
+    document.getElementById('meetFAction').value  = item.action||'';
+  } else {
+    document.getElementById('meetingModalTitle').textContent = '🤝 إضافة لقاء جديد';
+    ['meetFStudent','meetFParent','meetFSummary','meetFAction'].forEach(i=>{ document.getElementById(i).value=''; });
+    document.getElementById('meetFDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('meetFType').value = 'حضوري';
+  }
+  document.getElementById('meetingModal').classList.add('open');
+}
+
+function saveMeeting(){
+  const editId  = document.getElementById('meetingEditId').value;
+  const student = document.getElementById('meetFStudent').value.trim();
+  if(!student){ toast('يرجى إدخال اسم الطالب','error'); return; }
+  const obj = {
+    id:      editId || ('meet_'+Date.now()),
+    student,
+    parent:  document.getElementById('meetFParent').value.trim(),
+    date:    document.getElementById('meetFDate').value,
+    type:    document.getElementById('meetFType').value,
+    summary: document.getElementById('meetFSummary').value.trim(),
+    action:  document.getElementById('meetFAction').value.trim(),
+    createdAt: editId ? undefined : new Date().toISOString()
+  };
+  const all = getMeetings();
+  if(editId){ const i=all.findIndex(x=>x.id===editId); if(i>=0){ obj.createdAt=all[i].createdAt; all[i]=obj; } else all.push(obj); }
+  else all.push(obj);
+  saveMeetings(all);
+  document.getElementById('meetingModal').classList.remove('open');
+  renderMeetings();
+  toast('✅ تم حفظ اللقاء','success');
+}
+
+function deleteMeeting(id){
+  if(!confirm('هل تريد حذف هذا اللقاء؟')) return;
+  saveMeetings(getMeetings().filter(x=>x.id!==id));
+  renderMeetings();
+  toast('تم الحذف','info');
+}
+
+function renderMeetings(){
+  const all     = getMeetings();
+  const q       = (document.getElementById('meetSearch')?.value||'').trim().toLowerCase();
+  const typeF   = document.getElementById('meetFilterType')?.value||'all';
+  const typeIcon = {حضوري:'🏫', هاتفي:'📞', واتساب:'📱', مرئي:'🎥'};
+  const typeColor= {حضوري:'var(--sky)', هاتفي:'var(--mint)', واتساب:'#25d366', مرئي:'var(--plum)'};
+
+  let filtered = all.filter(m=>{
+    if(typeF!=='all' && m.type!==typeF) return false;
+    if(q && !m.student.toLowerCase().includes(q) && !(m.parent||'').toLowerCase().includes(q) && !(m.summary||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+  filtered.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+  // KPIs
+  document.getElementById('meetKpiTotal').textContent    = all.length;
+  document.getElementById('meetKpiPresence').textContent = all.filter(x=>x.type==='حضوري').length;
+  document.getElementById('meetKpiPhone').textContent    = all.filter(x=>x.type==='هاتفي'||x.type==='واتساب').length;
+  document.getElementById('meetKpiVideo').textContent    = all.filter(x=>x.type==='مرئي').length;
+
+  const grid  = document.getElementById('meetingsGrid');
+  const empty = document.getElementById('meetingsEmpty');
+  if(!filtered.length){ grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+
+  grid.innerHTML = filtered.map(m=>{
+    const color  = typeColor[m.type]||'var(--sky)';
+    const icon   = typeIcon[m.type]||'🤝';
+    const dateStr = m.date ? new Date(m.date).toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}) : '—';
+    return `<div class="class-card">
+      <div class="class-card-header">
+        <div>
+          <div class="class-name">${m.student}</div>
+          <div class="class-meta">
+            ${m.parent?`<span>👨‍👦 ${m.parent}</span><span class="class-meta-dot"></span>`:''}
+            <span style="color:${color};font-weight:700;">${icon} ${m.type}</span>
+            <span class="class-meta-dot"></span>
+            <span>📅 ${dateStr}</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+          <button class="btn btn-ghost btn-xs" onclick="openMeetingModal('${m.id}')">✏️</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteMeeting('${m.id}')">🗑</button>
+        </div>
+      </div>
+      <div class="class-card-body" style="display:flex;flex-direction:column;gap:10px;">
+        ${m.summary?`<div style="background:rgba(21,101,192,.06);border:1px solid rgba(21,101,192,.15);border-radius:10px;padding:10px 14px;">
+          <div style="font-size:.74rem;font-weight:800;color:var(--sky);margin-bottom:4px;">📋 ملخص اللقاء</div>
+          <div style="font-size:.84rem;color:var(--ink);line-height:1.6;">${m.summary}</div>
+        </div>`:''}
+        ${m.action?`<div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);border-radius:10px;padding:10px 14px;">
+          <div style="font-size:.74rem;font-weight:800;color:var(--mint);margin-bottom:4px;">✅ الإجراء المتفق عليه</div>
+          <div style="font-size:.84rem;color:var(--ink);line-height:1.6;">${m.action}</div>
+        </div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════
+// 📝 NOTES SYSTEM
+// ════════════════════════════════════════════
+const NOTES_KEY = 'bs_notes';
+function getNotes(){ try{ return JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'); }catch(e){ return []; } }
+function saveNotes(d){ localStorage.setItem(NOTES_KEY, JSON.stringify(d)); }
+
+function openNoteModal(id){
+  document.getElementById('noteEditId').value = id||'';
+  if(id){
+    const item = getNotes().find(x=>x.id===id);
+    if(!item) return;
+    document.getElementById('noteModalTitle').textContent = '✏️ تعديل الملاحظة';
+    document.getElementById('noteFStudent').value  = item.student||'';
+    document.getElementById('noteFClass').value    = item.cls||'';
+    document.getElementById('noteFType').value     = item.type||'عام';
+    document.getElementById('noteFPriority').value = item.priority||'عادي';
+    document.getElementById('noteFContent').value  = item.content||'';
+  } else {
+    document.getElementById('noteModalTitle').textContent = '📝 إضافة ملاحظة جديدة';
+    ['noteFStudent','noteFClass','noteFContent'].forEach(i=>{ document.getElementById(i).value=''; });
+    document.getElementById('noteFType').value     = 'عام';
+    document.getElementById('noteFPriority').value = 'عادي';
+  }
+  document.getElementById('noteModal').classList.add('open');
+}
+
+function saveNote(){
+  const editId  = document.getElementById('noteEditId').value;
+  const student = document.getElementById('noteFStudent').value.trim();
+  const content = document.getElementById('noteFContent').value.trim();
+  if(!student){ toast('يرجى إدخال اسم الطالب','error'); return; }
+  if(!content){ toast('يرجى كتابة الملاحظة','error'); return; }
+  const obj = {
+    id:       editId || ('note_'+Date.now()),
+    student,
+    cls:      document.getElementById('noteFClass').value.trim(),
+    type:     document.getElementById('noteFType').value,
+    priority: document.getElementById('noteFPriority').value,
+    content,
+    createdAt: new Date().toISOString()
+  };
+  const all = getNotes();
+  if(editId){ const i=all.findIndex(x=>x.id===editId); if(i>=0) all[i]=obj; else all.push(obj); }
+  else all.push(obj);
+  saveNotes(all);
+  document.getElementById('noteModal').classList.remove('open');
+  renderNotes();
+  toast('✅ تم حفظ الملاحظة','success');
+}
+
+function deleteNote(id){
+  if(!confirm('هل تريد حذف هذه الملاحظة؟')) return;
+  saveNotes(getNotes().filter(x=>x.id!==id));
+  renderNotes();
+  toast('تم الحذف','info');
+}
+
+function renderNotes(){
+  const all      = getNotes();
+  const q        = (document.getElementById('noteSearch')?.value||'').trim().toLowerCase();
+  const typeF    = document.getElementById('noteFilterType')?.value||'all';
+  const prioF    = document.getElementById('noteFilterPriority')?.value||'all';
+  const prioColor  = {عاجل:'var(--ember)', مهم:'var(--gold)', عادي:'var(--mint)'};
+  const prioIcon   = {عاجل:'🚨', مهم:'⚠️', عادي:'✅'};
+  const typeColor  = {عام:'var(--sky)', أكاديمي:'var(--plum)', سلوكي:'var(--gold)', 'تواصل مع ولي الأمر':'#0891b2'};
+  const typeIcon   = {عام:'📋', أكاديمي:'📚', سلوكي:'⭐', 'تواصل مع ولي الأمر':'📱'};
+
+  let filtered = all.filter(n=>{
+    if(typeF!=='all' && n.type!==typeF) return false;
+    if(prioF!=='all' && n.priority!==prioF) return false;
+    if(q && !n.student.toLowerCase().includes(q) && !n.content.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  filtered.sort((a,b)=>{
+    const po = {عاجل:0, مهم:1, عادي:2};
+    return (po[a.priority]??2)-(po[b.priority]??2) || (b.createdAt||'').localeCompare(a.createdAt||'');
+  });
+
+  // KPIs
+  document.getElementById('noteKpiTotal').textContent    = all.length;
+  document.getElementById('noteKpiUrgent').textContent   = all.filter(x=>x.priority==='عاجل').length;
+  document.getElementById('noteKpiImportant').textContent= all.filter(x=>x.priority==='مهم').length;
+  document.getElementById('noteKpiNormal').textContent   = all.filter(x=>x.priority==='عادي').length;
+
+  const grid  = document.getElementById('notesGrid');
+  const empty = document.getElementById('notesEmpty');
+  if(!filtered.length){ grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+
+  grid.innerHTML = filtered.map(n=>{
+    const pc = prioColor[n.priority]||'var(--sky)';
+    const pi = prioIcon[n.priority]||'✅';
+    const tc = typeColor[n.type]||'var(--sky)';
+    const ti = typeIcon[n.type]||'📋';
+    const dateStr = n.createdAt ? new Date(n.createdAt).toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}) : '—';
+    return `<div class="class-card" style="border-top:3px solid ${pc};">
+      <div class="class-card-header">
+        <div style="flex:1;">
+          <div class="class-name">${n.student}${n.cls?` <span style="font-size:.78rem;font-weight:600;color:var(--muted)">(${n.cls})</span>`:''}</div>
+          <div class="class-meta" style="margin-top:5px;gap:8px;">
+            <span style="background:${tc}18;border:1px solid ${tc}44;color:${tc};font-size:.70rem;font-weight:800;padding:2px 8px;border-radius:99px;">${ti} ${n.type}</span>
+            <span style="background:${pc}18;border:1px solid ${pc}44;color:${pc};font-size:.70rem;font-weight:800;padding:2px 8px;border-radius:99px;">${pi} ${n.priority}</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+          <button class="btn btn-ghost btn-xs" onclick="openNoteModal('${n.id}')">✏️</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteNote('${n.id}')">🗑</button>
+        </div>
+      </div>
+      <div class="class-card-body">
+        <div style="font-size:.86rem;color:var(--ink);line-height:1.7;white-space:pre-wrap;">${n.content}</div>
+        <div style="font-size:.72rem;color:var(--muted2);margin-top:8px;">📅 ${dateStr}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// إغلاق الـ modals عند الضغط على الخلفية
+document.getElementById('gradesModal').addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); });
+document.getElementById('behaviorModal').addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); });
+
+// ════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════
 (function(){
@@ -1094,6 +2377,517 @@ function toast(msg,type='info'){
   const el=document.getElementById('lastRefresh');
   if(el) el.textContent=new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});
 })();
+
+// ════════════════════════════════════════════
+// 🗂️ CASES SYSTEM
+// ════════════════════════════════════════════
+const CASES_KEY = 'bs_counselor_cases';
+function getCases(){ try{ return JSON.parse(localStorage.getItem(CASES_KEY)||'[]'); }catch(e){ return []; } }
+function saveCases(d){ localStorage.setItem(CASES_KEY, JSON.stringify(d)); }
+
+function openCaseModal(id){
+  const modal = document.getElementById('caseModal');
+  document.getElementById('caseEditId').value = id||'';
+  if(id){
+    const c = getCases().find(x=>x.id===id);
+    if(!c) return;
+    document.getElementById('caseModalTitle').textContent = '✏️ تعديل الحالة';
+    document.getElementById('caseFName').value = c.name||'';
+    document.getElementById('caseFClass').value = c.classRoom||'';
+    document.getElementById('caseFType').value = c.type||'سلوكية';
+    document.getElementById('caseFPriority').value = c.priority||'عادية';
+    document.getElementById('caseFProblem').value = c.problem||'';
+    document.getElementById('caseFPlan').value = c.plan||'';
+    document.getElementById('caseFPhone').value = c.phone||'';
+    document.getElementById('caseFStatus').value = c.status||'مفتوحة';
+    document.getElementById('caseFNotes').value = c.notes||'';
+  } else {
+    document.getElementById('caseModalTitle').textContent = '🗂️ تسجيل حالة إرشادية';
+    ['caseFName','caseFClass','caseFProblem','caseFPlan','caseFPhone','caseFNotes'].forEach(id=>{ document.getElementById(id).value=''; });
+    document.getElementById('caseFType').value = 'سلوكية';
+    document.getElementById('caseFPriority').value = 'عادية';
+    document.getElementById('caseFStatus').value = 'مفتوحة';
+  }
+  modal.classList.add('open');
+}
+
+function saveCase(){
+  const editId = document.getElementById('caseEditId').value;
+  const name = document.getElementById('caseFName').value.trim();
+  if(!name){ toast('يرجى إدخال اسم الطالب','error'); return; }
+  const cases = getCases();
+  const obj = {
+    id: editId || ('case_'+Date.now()),
+    name, classRoom: document.getElementById('caseFClass').value.trim(),
+    type: document.getElementById('caseFType').value,
+    priority: document.getElementById('caseFPriority').value,
+    problem: document.getElementById('caseFProblem').value.trim(),
+    plan: document.getElementById('caseFPlan').value.trim(),
+    phone: document.getElementById('caseFPhone').value.trim(),
+    status: document.getElementById('caseFStatus').value,
+    notes: document.getElementById('caseFNotes').value.trim(),
+    date: new Date().toLocaleDateString('ar-EG'),
+    createdAt: editId ? (cases.find(x=>x.id===editId)?.createdAt||Date.now()) : Date.now()
+  };
+  if(editId){ const i=cases.findIndex(x=>x.id===editId); if(i>=0) cases[i]=obj; else cases.push(obj); }
+  else cases.unshift(obj);
+  saveCases(cases);
+  document.getElementById('caseModal').classList.remove('open');
+  renderCasesPage();
+  toast('✅ تم حفظ الحالة','success');
+}
+
+function deleteCase(id){
+  if(!confirm('هل أنت متأكد من حذف هذه الحالة؟')) return;
+  saveCases(getCases().filter(x=>x.id!==id));
+  renderCasesPage();
+  toast('تم حذف الحالة','info');
+}
+
+function renderCasesPage(){
+  const cases = getCases();
+  const search = (document.getElementById('casesSearch')?.value||'').toLowerCase();
+  const fType = document.getElementById('casesFilterType')?.value||'all';
+  const fStatus = document.getElementById('casesFilterStatus')?.value||'all';
+
+  document.getElementById('casesKpiTotal').textContent = cases.length;
+  document.getElementById('casesKpiOpen').textContent = cases.filter(c=>c.status==='مفتوحة').length;
+  document.getElementById('casesKpiClosed').textContent = cases.filter(c=>c.status==='مغلقة').length;
+  document.getElementById('casesKpiUrgent').textContent = cases.filter(c=>c.priority==='عاجلة'||c.status==='عاجلة').length;
+
+  let filtered = cases.filter(c=>{
+    const matchSearch = !search || c.name.toLowerCase().includes(search) || (c.type||'').includes(search);
+    const matchType = fType==='all' || c.type===fType;
+    const matchStatus = fStatus==='all' || c.status===fStatus;
+    return matchSearch && matchType && matchStatus;
+  });
+
+  const grid = document.getElementById('casesGrid');
+  const empty = document.getElementById('casesEmpty');
+
+  if(!filtered.length){ grid.style.display='none'; empty.style.display='block'; return; }
+  grid.style.display='grid'; empty.style.display='none';
+
+  const typeColors = {سلوكية:'var(--ember)',أكاديمية:'var(--sky)',اجتماعية:'var(--mint)',نفسية:'var(--plum)',أسرية:'var(--gold)'};
+  const statusBg = {مفتوحة:'rgba(245,158,11,.12)',مغلقة:'rgba(16,185,129,.12)',عاجلة:'rgba(239,68,68,.12)'};
+  const statusClr = {مفتوحة:'#b45309',مغلقة:'#059669',عاجلة:'#dc2626'};
+  const statusIcon = {مفتوحة:'⏳',مغلقة:'✅',عاجلة:'🔴'};
+  const priorityIcon = {عادية:'🟢',متوسطة:'🟡',عاجلة:'🔴'};
+
+  grid.innerHTML = filtered.map(c => `
+    <div class="card" style="margin-bottom:0;border-top:3px solid ${typeColors[c.type]||'var(--sky)'};">
+      <div class="card-header" style="padding:14px 16px 10px;">
+        <div>
+          <div style="font-size:.96rem;font-weight:800;color:var(--ink2);">${c.name}</div>
+          <div style="font-size:.74rem;color:var(--muted);margin-top:2px;">${c.classRoom||'—'} &nbsp;·&nbsp; ${c.date||''}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <span style="font-size:.70rem;font-weight:800;padding:2px 10px;border-radius:99px;background:${statusBg[c.status]};color:${statusClr[c.status]};border:1px solid ${statusClr[c.status]}33">${statusIcon[c.status]} ${c.status}</span>
+          <span style="font-size:.68rem;color:var(--muted)">${priorityIcon[c.priority]||''} ${c.priority||''}</span>
+        </div>
+      </div>
+      <div class="card-body" style="padding:10px 16px 14px;">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="font-size:.72rem;padding:2px 10px;border-radius:99px;background:rgba(66,105,220,.08);border:1px solid rgba(66,105,220,.18);color:var(--sky);font-weight:700;">${c.type}</span>
+        </div>
+        ${c.problem?`<div style="font-size:.78rem;color:var(--ink);line-height:1.55;margin-bottom:6px;"><strong style="color:var(--ember)">المشكلة:</strong> ${c.problem.substring(0,100)}${c.problem.length>100?'...':''}</div>`:''}
+        ${c.plan?`<div style="font-size:.78rem;color:var(--ink);line-height:1.55;margin-bottom:6px;"><strong style="color:var(--sky)">خطة التدخل:</strong> ${c.plan.substring(0,100)}${c.plan.length>100?'...':''}</div>`:''}
+        ${c.notes?`<div style="font-size:.76rem;color:var(--muted);line-height:1.5;"><strong>ملاحظات:</strong> ${c.notes.substring(0,80)}${c.notes.length>80?'...':''}</div>`:''}
+      </div>
+      <div style="padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:6px;align-items:center;">
+        ${c.phone?`<a href="https://wa.me/966${c.phone.replace(/^0/,'')}" target="_blank" class="wa-btn">💬 واتساب</a>`:''}
+        <button class="btn btn-ghost btn-xs" onclick="openCaseModal('${c.id}')">✏️ تعديل</button>
+        <button class="btn btn-danger btn-xs" onclick="deleteCase('${c.id}')">🗑</button>
+        <select onchange="changeCaseStatus('${c.id}',this.value)" style="margin-right:auto;padding:4px 10px;border-radius:8px;border:1.5px solid var(--border);font-family:'Tajawal',sans-serif;font-size:.74rem;background:rgba(255,255,255,.8);color:var(--ink);outline:none;">
+          <option ${c.status==='مفتوحة'?'selected':''} value="مفتوحة">⏳ تحت المتابعة</option>
+          <option ${c.status==='مغلقة'?'selected':''} value="مغلقة">✅ مغلقة</option>
+          <option ${c.status==='عاجلة'?'selected':''} value="عاجلة">🔴 عاجلة</option>
+        </select>
+      </div>
+    </div>`).join('');
+}
+
+function changeCaseStatus(id, status){
+  const cases = getCases();
+  const c = cases.find(x=>x.id===id);
+  if(c){ c.status = status; saveCases(cases); renderCasesPage(); toast('تم تحديث حالة المتابعة','success'); }
+}
+
+// ════════════════════════════════════════════
+// 📅 ANNUAL PLAN
+// ════════════════════════════════════════════
+const PLAN_KEY = 'bs_counselor_plan';
+function getPlan(){ try{ return JSON.parse(localStorage.getItem(PLAN_KEY)||'[]'); }catch(e){ return []; } }
+function savePlan(d){ localStorage.setItem(PLAN_KEY, JSON.stringify(d)); }
+
+function openPlanItemModal(id){
+  document.getElementById('planEditId').value = id||'';
+  if(id){
+    const item = getPlan().find(x=>x.id===id);
+    if(!item) return;
+    document.getElementById('planFTitle').value = item.title||'';
+    document.getElementById('planFAxis').value = item.axis||'سلوك';
+    document.getElementById('planFMonth').value = item.month||'9';
+    document.getElementById('planFTarget').value = item.target||'';
+    document.getElementById('planFDesc').value = item.desc||'';
+    document.getElementById('planFStatus').value = item.status||'مخطط';
+    document.getElementById('planFBenef').value = item.beneficiaries||0;
+  } else {
+    ['planFTitle','planFTarget','planFDesc'].forEach(id=>{ document.getElementById(id).value=''; });
+    document.getElementById('planFBenef').value='';
+    document.getElementById('planFStatus').value='مخطط';
+  }
+  document.getElementById('planModal').classList.add('open');
+}
+
+function savePlanItem(){
+  const editId = document.getElementById('planEditId').value;
+  const title = document.getElementById('planFTitle').value.trim();
+  if(!title){ toast('يرجى إدخال اسم النشاط','error'); return; }
+  const plan = getPlan();
+  const obj = {
+    id: editId || ('plan_'+Date.now()),
+    title, axis: document.getElementById('planFAxis').value,
+    month: parseInt(document.getElementById('planFMonth').value),
+    target: document.getElementById('planFTarget').value.trim(),
+    desc: document.getElementById('planFDesc').value.trim(),
+    status: document.getElementById('planFStatus').value,
+    beneficiaries: parseInt(document.getElementById('planFBenef').value)||0
+  };
+  if(editId){ const i=plan.findIndex(x=>x.id===editId); if(i>=0) plan[i]=obj; else plan.push(obj); }
+  else plan.push(obj);
+  savePlan(plan);
+  document.getElementById('planModal').classList.remove('open');
+  renderAnnualPlan();
+  toast('✅ تم حفظ النشاط','success');
+}
+
+function deletePlanItem(id){
+  savePlan(getPlan().filter(x=>x.id!==id));
+  renderAnnualPlan();
+}
+
+function renderAnnualPlan(){
+  const plan = getPlan();
+  const months = [
+    {num:1,name:'محرم'},{num:2,name:'صفر'},{num:3,name:'ربيع الأول'},
+    {num:4,name:'ربيع الآخر'},{num:5,name:'جمادى الأولى'},{num:6,name:'جمادى الآخرة'},
+    {num:7,name:'رجب'},{num:8,name:'شعبان'},{num:9,name:'رمضان'},
+    {num:10,name:'شوال'},{num:11,name:'ذو القعدة'},{num:12,name:'ذو الحجة'}
+  ];
+  const statusColor = {مخطط:'var(--muted)',جاري:'var(--sky)',منجز:'var(--mint)',ملغى:'var(--ember)'};
+  const statusBg = {مخطط:'rgba(100,116,139,.10)',جاري:'rgba(21,101,192,.10)',منجز:'rgba(16,185,129,.10)',ملغى:'rgba(239,68,68,.10)'};
+  const axisColor = {سلوك:'var(--sky)',مهارات:'var(--plum)','مهارات حياتية':'var(--plum)',وقاية:'var(--ember)',توعية:'var(--gold)',أكاديمي:'var(--mint)',أسري:'#0891b2'};
+
+  const totalDone = plan.filter(x=>x.status==='منجز').length;
+  const totalBenef = plan.reduce((s,x)=>s+(x.beneficiaries||0),0);
+
+  const grid = document.getElementById('annualPlanGrid');
+  let html = `<div class="kpi-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));margin-bottom:20px;">
+    <div class="kpi blue" style="padding:14px"><span class="kpi-icon">📌</span><div class="kpi-val">${plan.length}</div><div class="kpi-label">إجمالي الأنشطة</div></div>
+    <div class="kpi green" style="padding:14px"><span class="kpi-icon">✅</span><div class="kpi-val">${totalDone}</div><div class="kpi-label">منجزة</div></div>
+    <div class="kpi gold" style="padding:14px"><span class="kpi-icon">🔄</span><div class="kpi-val">${plan.filter(x=>x.status==='جاري').length}</div><div class="kpi-label">جاري التنفيذ</div></div>
+    <div class="kpi plum" style="padding:14px"><span class="kpi-icon">👥</span><div class="kpi-val">${totalBenef}</div><div class="kpi-label">المستفيدون</div></div>
+  </div>`;
+
+  months.forEach(m => {
+    const items = plan.filter(x=>x.month===m.num);
+    const itemsHtml = items.length ? items.map(item=>`
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:10px;background:rgba(255,255,255,.55);border:1px solid var(--border);margin-bottom:8px;">
+        <div style="flex:1;">
+          <div style="font-size:.88rem;font-weight:800;color:var(--ink2);margin-bottom:4px;">${item.title}</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+            <span style="font-size:.68rem;padding:1px 8px;border-radius:99px;background:${axisColor[item.axis]||'var(--sky)'}22;color:${axisColor[item.axis]||'var(--sky)'};border:1px solid ${axisColor[item.axis]||'var(--sky)'}44;font-weight:700;">${item.axis}</span>
+            ${item.target?`<span style="font-size:.68rem;color:var(--muted)">👥 ${item.target}</span>`:''}
+            ${item.beneficiaries?`<span style="font-size:.68rem;color:var(--mint);font-weight:700;">✓ ${item.beneficiaries} مستفيد</span>`:''}
+          </div>
+          ${item.desc?`<div style="font-size:.74rem;color:var(--muted)">${item.desc}</div>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+          <span style="font-size:.68rem;font-weight:800;padding:2px 10px;border-radius:99px;background:${statusBg[item.status]};color:${statusColor[item.status]};border:1px solid ${statusColor[item.status]}44;">${item.status}</span>
+          <div style="display:flex;gap:4px;">
+            <button class="btn btn-ghost btn-xs" onclick="openPlanItemModal('${item.id}')">✏️</button>
+            <button class="btn btn-danger btn-xs" onclick="deletePlanItem('${item.id}')">🗑</button>
+          </div>
+        </div>
+      </div>`).join('')
+      : `<div style="text-align:center;padding:16px;color:var(--muted2);font-size:.78rem;">لا توجد أنشطة مخططة — <a href="#" onclick="openPlanItemModal();document.getElementById('planFMonth').value='${m.num}';return false;" style="color:var(--sky);font-weight:700;">إضافة نشاط</a></div>`;
+
+    html += `<div class="card" style="margin-bottom:16px;">
+      <div class="card-header">
+        <h3>📅 ${m.name}</h3>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="badge badge-blue">${items.length} نشاط</span>
+          <button class="btn btn-ghost btn-xs" onclick="openPlanItemModal();setTimeout(()=>document.getElementById('planFMonth').value='${m.num}',50)">➕</button>
+        </div>
+      </div>
+      <div class="card-body">${itemsHtml}</div>
+    </div>`;
+  });
+
+  grid.innerHTML = html;
+}
+
+// ════════════════════════════════════════════
+// 📏 SCALES SYSTEM
+// ════════════════════════════════════════════
+const SCALES_KEY = 'bs_counselor_scales';
+function getScaleResults(){ try{ return JSON.parse(localStorage.getItem(SCALES_KEY)||'[]'); }catch(e){ return []; } }
+function saveScaleResults(d){ localStorage.setItem(SCALES_KEY, JSON.stringify(d)); }
+
+const SCALES_DEF = {
+  behavior:{
+    title:'مقياس السلوك المدرسي',icon:'⭐',
+    desc:'يقيس مستوى السلوك الإيجابي والانضباط لدى الطالب (5 = ممتاز / 1 = يحتاج تدخل عاجل)',
+    questions:[
+      'يلتزم بقواعد الفصل والمدرسة',
+      'يتعامل باحترام مع المعلمين والزملاء',
+      'يؤدي واجباته المدرسية بانتظام',
+      'يشارك بإيجابية في الأنشطة',
+      'يتحكم في انفعالاته وردود أفعاله',
+      'يحضر بانتظام ولا يتغيب بدون عذر',
+    ],
+    levels:[
+      {min:0,max:10,label:'يحتاج تدخل عاجل',color:'var(--ember)'},
+      {min:11,max:18,label:'يحتاج متابعة مستمرة',color:'var(--gold)'},
+      {min:19,max:24,label:'سلوك مقبول',color:'var(--sky)'},
+      {min:25,max:30,label:'سلوك ممتاز',color:'var(--mint)'},
+    ]
+  },
+  anxiety:{
+    title:'مقياس مستوى القلق',icon:'😰',
+    desc:'يقيس مستوى القلق والتوتر لدى الطالب (5 = دائماً / 1 = لا يحدث أبداً)',
+    questions:[
+      'يشعر بالتوتر قبل الاختبارات',
+      'يتجنب المشاركة خوفاً من الفشل',
+      'يشكو من أعراض جسمية (صداع، ألم بطن) في المدرسة',
+      'يصعب عليه التركيز في الفصل',
+      'يخشى الإجابة الخاطئة أمام الزملاء',
+      'يتجنب المواقف الاجتماعية مع الزملاء',
+    ],
+    levels:[
+      {min:0,max:10,label:'مستوى قلق منخفض — طبيعي',color:'var(--mint)'},
+      {min:11,max:18,label:'قلق متوسط — يحتاج متابعة',color:'var(--gold)'},
+      {min:19,max:24,label:'قلق مرتفع — تدخل إرشادي',color:'var(--ember)'},
+      {min:25,max:30,label:'قلق حاد — إحالة متخصصة',color:'#dc2626'},
+    ]
+  },
+  motivation:{
+    title:'مقياس الدافعية نحو التعلم',icon:'🔥',
+    desc:'يقيس مدى دافعية الطالب وحماسه نحو الدراسة (5 = دائماً / 1 = لا يحدث أبداً)',
+    questions:[
+      'يسأل أسئلة إضافية يريد تعلمها',
+      'يستذكر دروسه بدون مطالبة',
+      'يُظهر تحمساً في الحصص والأنشطة',
+      'يسعى لتحسين نتائجه باستمرار',
+      'لديه أهداف أكاديمية واضحة',
+      'يبحث في مصادر إضافية خارج الكتاب',
+    ],
+    levels:[
+      {min:0,max:10,label:'دافعية منخفضة جداً',color:'var(--ember)'},
+      {min:11,max:18,label:'دافعية متوسطة',color:'var(--gold)'},
+      {min:19,max:24,label:'دافعية جيدة',color:'var(--sky)'},
+      {min:25,max:30,label:'دافعية عالية — ممتاز',color:'var(--mint)'},
+    ]
+  }
+};
+
+let currentScale = 'behavior';
+let scaleAnswers = {};
+
+function showScale(type){
+  currentScale = type; scaleAnswers = {};
+  ['behavior','anxiety','motivation'].forEach(t=>{
+    const btn = document.getElementById('scaleBtn'+({behavior:'Beh',anxiety:'Anx',motivation:'Mot'}[t]));
+    if(btn) btn.className = t===type ? 'btn btn-primary' : 'btn btn-ghost';
+  });
+  const s = SCALES_DEF[type];
+  const questionsHtml = s.questions.map((q,i)=>`
+    <div style="padding:14px 16px;border-radius:10px;background:rgba(255,255,255,.55);border:1px solid var(--border);margin-bottom:10px;">
+      <div style="font-size:.86rem;font-weight:700;color:var(--ink2);margin-bottom:10px;">${i+1}. ${q}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${[1,2,3,4,5].map(v=>`<button onclick="setScaleAnswer(${i},${v})" id="sq_${i}_${v}" style="width:42px;height:42px;border-radius:10px;border:2px solid var(--border);background:rgba(255,255,255,.60);font-weight:800;font-size:.90rem;cursor:pointer;transition:all .15s;font-family:'Tajawal',sans-serif;">${v}</button>`).join('')}
+        <span style="font-size:.74rem;color:var(--muted);align-self:center;margin-right:4px;">(1=لا يحدث / 5=دائماً)</span>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('scaleContent').innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        <h3>${s.icon} ${s.title}</h3>
+        <span style="font-size:.78rem;color:var(--muted)">${s.desc}</span>
+      </div>
+      <div class="card-body">
+        <div class="fg-row" style="margin-bottom:14px;">
+          <div class="fg"><label>اسم الطالب *</label><input type="text" id="scaleStudentName" placeholder="اسم الطالب"></div>
+          <div class="fg"><label>الفصل</label><input type="text" id="scaleStudentClass" placeholder="مثال: 3أ"></div>
+        </div>
+        ${questionsHtml}
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding:14px;background:rgba(21,101,192,.06);border-radius:12px;border:1px solid rgba(21,101,192,.15);">
+          <div style="font-size:.88rem;font-weight:800;color:var(--sky)">المجموع: <span id="scaleTotalScore">0</span> / 30</div>
+          <div id="scaleInterpret" style="font-size:.84rem;font-weight:700;color:var(--muted)">— اختر إجاباتك أولاً —</div>
+          <button class="btn btn-primary btn-sm" onclick="saveScaleResult()">💾 حفظ النتيجة</button>
+        </div>
+      </div>
+    </div>`;
+  renderScaleResults();
+}
+
+function setScaleAnswer(qIdx, val){
+  scaleAnswers[qIdx] = val;
+  const s = SCALES_DEF[currentScale];
+  s.questions.forEach((_,i)=>{
+    [1,2,3,4,5].forEach(v=>{
+      const btn = document.getElementById(`sq_${i}_${v}`);
+      if(btn){
+        btn.style.background = scaleAnswers[i]===v ? 'var(--sky)' : 'rgba(255,255,255,.60)';
+        btn.style.color = scaleAnswers[i]===v ? 'white' : 'var(--ink)';
+        btn.style.borderColor = scaleAnswers[i]===v ? 'var(--sky)' : 'var(--border)';
+      }
+    });
+  });
+  const total = Object.values(scaleAnswers).reduce((a,b)=>a+b,0);
+  const totalEl = document.getElementById('scaleTotalScore');
+  if(totalEl) totalEl.textContent = total;
+  const level = s.levels.find(l=>total>=l.min && total<=l.max);
+  const interpEl = document.getElementById('scaleInterpret');
+  if(interpEl && level) interpEl.innerHTML = `<span style="color:${level.color};font-weight:800;">${level.label}</span>`;
+}
+
+function saveScaleResult(){
+  const name = document.getElementById('scaleStudentName')?.value.trim();
+  if(!name){ toast('أدخل اسم الطالب أولاً','error'); return; }
+  const s = SCALES_DEF[currentScale];
+  const answered = Object.keys(scaleAnswers).length;
+  if(answered < s.questions.length){ toast('يرجى الإجابة على كل الأسئلة','error'); return; }
+  const total = Object.values(scaleAnswers).reduce((a,b)=>a+b,0);
+  const level = s.levels.find(l=>total>=l.min && total<=l.max);
+  const results = getScaleResults();
+  results.unshift({
+    id:'scl_'+Date.now(),
+    studentName: name,
+    classRoom: document.getElementById('scaleStudentClass')?.value.trim()||'',
+    scaleType: currentScale,
+    scaleTitle: s.title,
+    total, maxScore:30,
+    level: level?.label||'—',
+    levelColor: level?.color||'var(--muted)',
+    date: new Date().toLocaleDateString('ar-EG')
+  });
+  saveScaleResults(results);
+  toast('✅ تم حفظ نتيجة التقييم','success');
+  scaleAnswers = {};
+  showScale(currentScale);
+}
+
+function renderScaleResults(){
+  const results = getScaleResults();
+  const badge = document.getElementById('scaleResultsCount');
+  if(badge) badge.textContent = results.length+' تقييم';
+  const tbody = document.getElementById('scaleResultsBody');
+  if(!tbody) return;
+  if(!results.length){ tbody.innerHTML='<tr><td colspan="7" class="empty-absence">لا توجد تقييمات بعد</td></tr>'; return; }
+  tbody.innerHTML = results.map(r=>`
+    <tr>
+      <td><strong>${r.studentName}</strong></td>
+      <td>${r.classRoom||'—'}</td>
+      <td>${r.scaleTitle}</td>
+      <td style="text-align:center;font-weight:900;color:var(--sky)">${r.total}/${r.maxScore}</td>
+      <td><span style="font-weight:700;color:${r.levelColor}">${r.level}</span></td>
+      <td style="color:var(--muted)">${r.date}</td>
+      <td><button class="btn btn-danger btn-xs" onclick="deleteScaleResult('${r.id}')">🗑</button></td>
+    </tr>`).join('');
+}
+
+function deleteScaleResult(id){
+  saveScaleResults(getScaleResults().filter(x=>x.id!==id));
+  renderScaleResults();
+}
+
+// ════════════════════════════════════════════
+// 📝 MONTHLY REPORT
+// ════════════════════════════════════════════
+function generateMonthlyReport(){
+  const cases = getCases();
+  const plan = getPlan();
+  const scales = getScaleResults();
+  const month = document.getElementById('reportMonth').value;
+  const year = document.getElementById('reportYear').value||'1446';
+  const achievText = document.getElementById('reportAchiev').value.trim();
+  const challengeText = document.getElementById('reportChallenges').value.trim();
+  const recsText = document.getElementById('reportRecs').value.trim();
+
+  const monthNames = {1:'محرم',2:'صفر',3:'ربيع الأول',4:'ربيع الآخر',5:'جمادى الأولى',6:'جمادى الآخرة',7:'رجب',8:'شعبان',9:'رمضان',10:'شوال',11:'ذو القعدة',12:'ذو الحجة'};
+  const monthName = monthNames[month]||'';
+
+  const openCases = cases.filter(c=>c.status==='مفتوحة').length;
+  const closedCases = cases.filter(c=>c.status==='مغلقة').length;
+  const urgentCases = cases.filter(c=>c.status==='عاجلة').length;
+  const planDone = plan.filter(p=>p.status==='منجز').length;
+  const totalBenef = plan.reduce((s,x)=>s+(x.beneficiaries||0),0);
+  const recentScales = scales.slice(0,5);
+
+  const output = document.getElementById('monthlyReportOutput');
+  output.style.display = 'block';
+  output.innerHTML = `
+    <div class="card" style="border-top:4px solid var(--sky);">
+      <div class="card-header" style="background:linear-gradient(135deg,rgba(21,101,192,.08),rgba(124,58,237,.05));padding:20px 24px;">
+        <div>
+          <div style="font-size:1.2rem;font-weight:900;color:var(--ink2);">📝 التقرير الشهري الإرشادي</div>
+          <div style="font-size:.84rem;color:var(--muted);margin-top:3px;">شهر ${monthName} ${year}هـ &nbsp;·&nbsp; مدارس البشرى الأهلية</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="window.print()">🖨️ طباعة</button>
+      </div>
+      <div class="card-body" style="padding:24px;">
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+          <div class="kpi blue" style="padding:14px;"><span class="kpi-icon">🗂️</span><div class="kpi-val">${cases.length}</div><div class="kpi-label">إجمالي الحالات</div></div>
+          <div class="kpi gold" style="padding:14px;"><span class="kpi-icon">⏳</span><div class="kpi-val">${openCases}</div><div class="kpi-label">تحت المتابعة</div></div>
+          <div class="kpi green" style="padding:14px;"><span class="kpi-icon">✅</span><div class="kpi-val">${closedCases}</div><div class="kpi-label">حالات محسّنة</div></div>
+          <div class="kpi plum" style="padding:14px;"><span class="kpi-icon">📅</span><div class="kpi-val">${planDone}</div><div class="kpi-label">برامج منجزة</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+          <div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.20);border-radius:12px;padding:16px;">
+            <div style="font-size:.86rem;font-weight:800;color:#059669;margin-bottom:8px;">🏆 أبرز الإنجازات</div>
+            <div style="font-size:.84rem;color:var(--ink);line-height:1.7;">${achievText||`• تمت متابعة ${cases.length} حالة إرشادية\n• تنفيذ ${planDone} برنامج إرشادي\n• الاستفادة من التدخلات الإرشادية لـ ${totalBenef} طالب`}</div>
+          </div>
+          <div style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.18);border-radius:12px;padding:16px;">
+            <div style="font-size:.86rem;font-weight:800;color:#dc2626;margin-bottom:8px;">⚡ أبرز التحديات</div>
+            <div style="font-size:.84rem;color:var(--ink);line-height:1.7;">${challengeText||`• ${urgentCases} حالات تحتاج متابعة عاجلة\n• متابعة التواصل مع أسر بعض الحالات\n• تكثيف البرامج الوقائية`}</div>
+          </div>
+        </div>
+
+        ${recentScales.length?`
+        <div style="margin-bottom:20px;">
+          <div style="font-size:.90rem;font-weight:800;color:var(--ink2);margin-bottom:10px;">📏 آخر التقييمات المُجراة</div>
+          <div style="overflow-x:auto;"><table class="tbl" style="font-size:.80rem;">
+            <thead><tr><th>الطالب</th><th>الفصل</th><th>المقياس</th><th style="text-align:center">الدرجة</th><th>التفسير</th></tr></thead>
+            <tbody>${recentScales.map(r=>`<tr><td><strong>${r.studentName}</strong></td><td>${r.classRoom||'—'}</td><td>${r.scaleTitle}</td><td style="text-align:center;font-weight:700;">${r.total}/30</td><td style="color:${r.levelColor};font-weight:700;">${r.level}</td></tr>`).join('')}</tbody>
+          </table></div>
+        </div>`:''}
+
+        <div style="background:rgba(21,101,192,.06);border:1px solid rgba(21,101,192,.18);border-radius:12px;padding:16px;">
+          <div style="font-size:.86rem;font-weight:800;color:var(--sky);margin-bottom:8px;">📌 التوصيات للإدارة</div>
+          <div style="font-size:.84rem;color:var(--ink);line-height:1.7;">${recsText||'• دعم المرشد الطلابي في تنفيذ البرامج الإرشادية المخططة\n• تعزيز التواصل بين المعلمين والمرشد\n• توفير الموارد اللازمة للبرامج الوقائية'}</div>
+        </div>
+
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);">
+          <span>المرشد الطلابي: ____________________</span>
+          <span>التوقيع: ____________________</span>
+          <span>التاريخ: ${new Date().toLocaleDateString('ar-EG')}</span>
+        </div>
+      </div>
+    </div>`;
+  toast('✅ تم توليد التقرير','success');
+  output.scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('caseModal')?.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+document.getElementById('planModal')?.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+document.getElementById('meetingModal')?.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+document.getElementById('noteModal')?.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+
 </script>
 </body>
 </html>
