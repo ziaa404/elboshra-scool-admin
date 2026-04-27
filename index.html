@@ -87,6 +87,7 @@
   window._db       = db;
   window._COLL     = COLL;
   window._storage  = storage;
+  window._fsCache  = _fsCache;   // ← الإصلاح: نصدّر الكاش عشان DB يقدر يقرأه
 
   // ── Firebase Storage helpers ──
   window._storageUpload = function(file, path, onProgress) {
@@ -4852,7 +4853,7 @@ const DB = {
     if (v !== undefined) return v;
     // fallback → localStorage لو Firebase لسه ما جهزش
     try {
-      const ls = DB.get(key);
+      const ls = localStorage.getItem(key);
       if (ls !== null) { this._cache[key] = ls; return ls; }
     } catch(e) {}
     return fallback;
@@ -4868,7 +4869,7 @@ const DB = {
   set(key, value) {
     this._cache[key] = value;
     // localStorage كـ fallback محلي
-    try { DB.set(key, value); } catch(e) {}
+    try { localStorage.setItem(key, value); } catch(e) {}
     // Firebase async (fire & forget)
     if (window._fsSet) {
       window._fsSet(key, value).catch(e => console.warn('DB.set Firebase error:', key, e));
@@ -4881,7 +4882,7 @@ const DB = {
 
   remove(key) {
     delete this._cache[key];
-    try { DB.remove(key); } catch(e) {}
+    try { localStorage.removeItem(key); } catch(e) {}
     if (window._fsRemove) window._fsRemove(key);
   },
 
@@ -12557,3 +12558,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
 </script>
 </body>
 </html>
+
+          
