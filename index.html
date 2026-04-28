@@ -9789,8 +9789,28 @@ document.getElementById('importStudentsModal')?.addEventListener('click',functio
   var origShowView3 = window.showView;
   window.showView = function(id){
     if(typeof origShowView3==='function') origShowView3(id);
-    if(id==='cloudbag'){ cbRender(); cbUpdateKPIs(); }
+    if(id==='cloudbag'){
+      if(window._firebaseReady){
+        cbRender(); cbUpdateKPIs();
+      } else {
+        // لو Firebase لسه شغال، نستنى ونرسم
+        document.addEventListener('firebaseReady', function(){
+          cbRender(); cbUpdateKPIs();
+        }, { once: true });
+        // نعرض loading مؤقت
+        var grid = document.getElementById('cbGrid');
+        if(grid) grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⏳ جاري تحميل الملفات...</div>';
+      }
+    }
   };
+
+  // بعد Firebase نرسم لو في الحقيبة
+  document.addEventListener('firebaseReady', function(){
+    var view = document.getElementById('view-cloudbag');
+    if(view && view.style.display !== 'none' && view.classList.contains('active')){
+      cbRender(); cbUpdateKPIs();
+    }
+  });
 
   document.addEventListener('DOMContentLoaded', function(){
     cbUpdateKPIs();
